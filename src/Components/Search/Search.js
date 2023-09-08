@@ -1,10 +1,13 @@
 import React from 'react'
-
+import { Input,SearchContainer } from './style'
 const Search = () => {
   return (
-    <div>
-       Iam Search
-    </div>
+    <>
+      <SearchContainer>
+           <Input type='text' placeholder='Search or start a new chat'/>
+      </SearchContainer>
+      
+    </>
   )
 }
 

@@ -9,13 +9,13 @@ const HomeContainer=styled.div`
 
 `
 const Box=styled.div`
-width:65%;
-height:80%;
-border-radius: 10px;
-overflow: hidden;
-display: flex;
-flex-direction: row;
-justify-content: flex-start;
+    width:65%;
+    height:80%;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
 `
 
 export {HomeContainer,Box}
