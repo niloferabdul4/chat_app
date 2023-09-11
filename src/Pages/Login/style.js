@@ -14,9 +14,9 @@ const LoginContainer=styled.div`
 
 `
 
-const Form=styled.form`
+const Wrapper=styled.div`
     background-color:white;
-    width:30%;
+    width:20%;
     padding:40px;
     display: flex;
     flex-direction: column;
@@ -45,4 +45,4 @@ const Button=styled.button`
     cursor: pointer;
     border:none;
 `
-export {LoginContainer,Form,Input,Button}
+export {LoginContainer,Wrapper,Input,Button}

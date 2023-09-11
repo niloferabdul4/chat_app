@@ -20,7 +20,9 @@ const Chatbar = () => {
                 <MoreHorizOutlinedIcon/>
             </Wrapper>           
       </ChatNavContainer>
-        <Messages/>
+      <span style={{display:'flex', height:'calc(100% - 150px)',overflowY:'scroll',width:'100%',padding:'20px'}} >
+      <Messages/>
+      </span>
         <InputWrapper>        
             <Input type='text' placeholder='Type a message' />
             <ChatIcons>

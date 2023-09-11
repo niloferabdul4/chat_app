@@ -8,14 +8,14 @@ const ChatContainer=styled.div`
   background-color:lavenderblush; 
   display: flex;
   flex-direction:column;
-  align-items:center;
+  align-items:flex-start;
   justify-content: space-between;
   overflow: hidden;
 `
 
 
 const ChatNavContainer=styled.div`
-  height:56px;
+  height:60px;
   width:100%;
   background-color: #3e3c51;
         display: flex;
@@ -23,6 +23,7 @@ const ChatNavContainer=styled.div`
         justify-content: flex-end;
         padding: 10px;
         color: lightgray;
+        position:sticky;
 
 `
 
@@ -46,6 +47,7 @@ const InputWrapper=styled.div`
   display:flex;
   justify-content: space-between;
   gap:10px;
+ 
 
 `
 const Input=styled.input`
@@ -62,6 +64,7 @@ const ChatIcons=styled.div`
  display:flex;
  justify-content: flex-start;
 
+
 `
 
 const Button=styled.button`
@@ -70,10 +73,8 @@ const Button=styled.button`
   padding: 8px;
   color:white;
   border-radius: 6px;
-
-        font-weight: bold;
- 
-        cursor: pointer;
+  font-weight: bold;
+  cursor: pointer;
 
 `
 export {ChatContainer,ChatNavContainer,Wrapper,InputWrapper,Input,ChatIcons,Button}

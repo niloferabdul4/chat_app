@@ -51,6 +51,7 @@ const LogoutButton=styled.button`
  color:white;
  font-size: 1rem;;
  padding:6px;
+ cursor: pointer;
 `
 
 export {NavbarContainer,LeftWrapper,Logo,RightWrapper,UserName,LogoutButton,Image}
