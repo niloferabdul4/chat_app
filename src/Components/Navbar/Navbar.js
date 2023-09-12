@@ -6,13 +6,13 @@ import { auth } from '../../firebase';
 import { AppContext } from '../../Context/AppContextProvider';
 import { useNavigate } from 'react-router-dom';
 const Navbar = () => {
-  const {state:{user},dispatch}=useContext(AppContext)
+  const {user,setUser}=useContext(AppContext)
 
   const navigate=useNavigate()
   const logoutFn=()=>{
      signOut(auth)
      .then((authUser)=>{
-         dispatch({type:'SET_USER',payload:null})
+         setUser(authUser)
          navigate('/login')
      })
      .catch(error=>console.log(error.message))

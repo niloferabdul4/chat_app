@@ -4,7 +4,7 @@ import image from '../../assets/agent10.png'
 import { AppContext } from '../../Context/AppContextProvider'
 const Users = () => {
 
-  const {state:{user}}=useContext(AppContext)
+  const {user}=useContext(AppContext)
   return (
     <>
         <UsersContainer>

@@ -1,15 +1,18 @@
-import React, { useReducer } from 'react'
-import { createContext } from 'react'
-import reducer from './reducer'
+
+import React,{createContext,useState} from 'react'
+
 export const AppContext=createContext()
 
 const AppContextProvider = ({children}) => { 
+ const [chats,setChats]=useState([])
+ const [newMessage,setNewMessage]=useState('')
+ const [user,setUser]=useState('')
+ 
 
-const initialState={user:'',chats:[]}
-const [state,dispatch]=useReducer(reducer,initialState)
+
   return (
     <>
-      <AppContext.Provider value={{state,dispatch}}>
+      <AppContext.Provider value={{user,setUser,chats,setChats,newMessage,setNewMessage}}>
         {children}
       </AppContext.Provider>
     </>
