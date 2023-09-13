@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React,{useContext} from 'react'
 import { RegisterContainer,Wrapper,Title,Form,InputWrapper,FileWrapper,Label,Input,Button,SignIn,UploadLabel} from './style';
 import AddAPhotoOutlinedIcon from '@mui/icons-material/AddAPhotoOutlined';
 import { ToastContainer, toast } from 'react-toastify';
@@ -8,56 +8,52 @@ import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth, db, storage } from '../../firebase';
 import { getDownloadURL } from 'firebase/storage';
 import { ref, uploadBytesResumable } from 'firebase/storage';
-import { addDoc, doc, setDoc } from '@firebase/firestore';
+import { doc, setDoc } from '@firebase/firestore';
+import { AppContext } from '../../Context/AppContextProvider';
 
 
 const Register = () => {
-    const [formData,setFormData]=useState({name:'',email:'',password:'',file:''})
-    const [error,setError]=useState(false)
-    const navigate=useNavigate()
 
-
-/*********   HandleChange Function   *********/
-
-    const handleChange=(event)=>
-    {
-        const {name,value}=event.target;
-        setFormData(prevData=>({...prevData,[name]:value}))
-       
-    }
-
+  const navigate=useNavigate()
 
 /**********    HandleSubmit Function   *********/
 
     const handleSubmit=async(event)=>
     {
         event.preventDefault();
-
-        /*
+        const name=event.target[0].value;
+        const email=event.target[1].value;
+        const password=event.target[2].value
+        const file=event.target[3].files[0]
         try
         {
-          const res=await createUserWithEmailAndPassword(auth,formData.email,formData.password)    
+          const res=await createUserWithEmailAndPassword(auth,email,password)    
 
           //create a unique image name    
-          const storageRef=ref(storage,formData.name)
+          const storageRef=ref(storage,name)
    
          //Upload file to the object 'images/mountains.jpg'   
-           uploadBytesResumable(storageRef, formData.file).then(()=>
+           uploadBytesResumable(storageRef, file).then(()=>
               
                  {
                                                                                             // Handle successful uploads on complete    
                    getDownloadURL(storageRef).then(async(downloadURL) => {
-                           await updateProfile(res.user,{
+                           await updateProfile(res.user,{                      //  update user profile 
                                  displayName:res.user.name,
                                  photoURL:downloadURL
-                             })                    //  update user profile 
+                             })                    
 
-                             setDoc(doc(db,'users',res.user.uid),{               // add user profile to users collection
+                             
+                              // add user profile to users collection
+
+                             setDoc(doc(db,'users',res.user.uid),{              
                               uid:res.user.uid,
-                              displayName:formData.name,
-                              email:formData.email,
+                              displayName:name,
+                              email:email,
                                photoURL:downloadURL
                              })
+                             navigate('/')
+                            
                         
                    });  
 
@@ -71,7 +67,7 @@ const Register = () => {
         {
            toast.error(error.message)
         }
-*/
+
 
 
 }
@@ -84,68 +80,31 @@ const Register = () => {
               <Form onSubmit={handleSubmit}>
                         <InputWrapper>
                                <Label htmlFor='name'>Name</Label>
-                               <Input  
-                                       type='text' 
-                                       id='name'
-                                       value={formData.name}
-                                       name='name'  
-                                       placeholder='Name'
-                                       onChange={handleChange}
-                               />
+                               <Input type='text' id='name' placeholder='Name' />
                           <ToastContainer/>      
                        </InputWrapper>
-
                        <InputWrapper>
                                <Label htmlFor='email'>Email</Label>
-                               <Input 
-                                       type='email'
-                                       id='email'
-                                       placeholder='Email'
-                                       value={formData.email}
-                                       name='email'
-                                       onChange={handleChange}
-                                />                                                                   
-                              
+                               <Input type='email'  id='email' placeholder='Email'  />                                                                                            
                           <ToastContainer/>      
                        </InputWrapper>
                        <InputWrapper>
                                <Label htmlFor='pwd'>Password</Label>
-                               <Input 
-                                       type='password' 
-                                       id='pwd'
-                                       placeholder='Password'
-                                       value={formData.password}
-                                       name='password'
-                                       onChange={handleChange}
-                               />                                                                  
-                              
+                               <Input type='password'  id='pwd' placeholder='Password'  />                                                                                   
                            <ToastContainer/>   
                        </InputWrapper>
-                       <FileWrapper>
-                              
-                               <Input  
-                                       type='file' 
-                                       id='file'
-                                       value={formData.file}
-                                       onChange={handleChange}
-                                       style={{display:'none'}}
-                               />
+                       <FileWrapper>                              
+                               <Input  type='file'  id='file'   style={{display:'none'}}   />
                                <UploadLabel htmlFor='file'>                             
                                  <AddAPhotoOutlinedIcon  style={{color:'grey',cursor:'pointer'}}/>
                                  <span>Add an avatar</span>
                                </UploadLabel>
                           <ToastContainer/>      
                        </FileWrapper>
-
-                       <Button type='submit'>Continue</Button>
-                                            
+                       <Button type='submit'>Continue</Button>                                            
                        <SignIn>Already have an account?  <Link to='/login'> Sign In </Link> </SignIn>
               </Form>
-
-           </Wrapper>
-                
-
-                
+           </Wrapper>                
        </RegisterContainer>
     </div>
   )

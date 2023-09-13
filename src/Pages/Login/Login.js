@@ -10,7 +10,6 @@ import { ToastContainer, toast } from 'react-toastify'
 import { NavLink } from 'react-router-dom';
 const Login = () => {
   const {setUser}=useContext(AppContext)
-  const [formData,setFormData]=useState({Email:'',Password:''})
   const navigate=useNavigate()
 /*
   useEffect(()=>{
@@ -27,17 +26,14 @@ const Login = () => {
     },[])
     
 */
-const handleChange=(event)=>
-{
-  const {name,value}=event.target;
-  setFormData(prevData=>({...prevData,[name]:value}))
-}
 
 
 
   const handleSubmit=async(event)=>{
     event.preventDefault()
-    await signInWithEmailAndPassword(auth,formData.Email,formData.Password)
+    const email=event.target[0].value;
+    const password=event.target[1].value;
+    await signInWithEmailAndPassword(auth,email,password)
     .then((authUser)=>{    
       setUser(authUser.user)
       navigate('/')
@@ -58,11 +54,7 @@ const handleChange=(event)=>
                                             <Label htmlFor='email'>Email</Label>
                                             <Input type='text' 
                                             placeholder='Email' 
-                                            value={formData.Email} 
-                                            name='Email'
                                             id='email' 
-                                            onChange={handleChange}
-                                            required
                                             />   
                                         <ToastContainer />   
                                     </InputWrapper>
@@ -70,11 +62,8 @@ const handleChange=(event)=>
                                             <Label html='password'>Password</Label>
                                             <Input type='password' 
                                             placeholder='Password'  
-                                            value={formData.Password} 
-                                            name='Password'
                                             id='password'  
-                                            onChange={handleChange}
-                                            required/>
+                                            />
                                             <ToastContainer/>
                                     </InputWrapper>                            
 

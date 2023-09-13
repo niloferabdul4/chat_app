@@ -6,6 +6,7 @@ import Login from './Pages/Login/Login';
 import { Routes,Route } from 'react-router-dom';
 import { AppContext } from './Context/AppContextProvider';
 import Register from './Pages/Register/Register';
+
 function App() {
   const {user}=useContext(AppContext)
 
