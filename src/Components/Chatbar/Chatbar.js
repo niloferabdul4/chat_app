@@ -14,7 +14,7 @@ import { db } from '../../firebase';
 
 
 const Chatbar = () => {
-  const {newMessage,setNewMessage,user}=useContext(AppContext)
+  const {newMessage,setNewMessage,loggedUser}=useContext(AppContext)
   const handleChange=(event)=>
   {
     setNewMessage(event.target.value)
@@ -24,9 +24,9 @@ const Chatbar = () => {
   const sendMessage=async()=>
   {
     await addDoc(collection(db,'chats'),{
-      uid:user.uid,
-      displayName:user.displayName,
-      message:user.newMessage,
+      uid:loggedUser.uid,
+      displayName:loggedUser.displayName,
+      message:loggedUser.newMessage,
       timestamp:serverTimestamp()
     })
   }

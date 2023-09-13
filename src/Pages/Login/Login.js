@@ -1,33 +1,15 @@
-import React,{useEffect, useState} from 'react'
-import { Container,Wrapper,Title,Form,InputWrapper,Label,Input,SignIn,Span,ErrorLabel } from './style';
+import React  from 'react'
+import { Container,Wrapper,Title,Form,InputWrapper,Label,Input,SignIn,Span } from './style';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebase'
 import { useContext } from 'react'
 import { AppContext } from '../../Context/AppContextProvider'
 import { useNavigate } from 'react-router-dom'
-import { onAuthStateChanged } from 'firebase/auth'
 import { ToastContainer, toast } from 'react-toastify'
 import { NavLink } from 'react-router-dom';
 const Login = () => {
-  const {setUser}=useContext(AppContext)
+  const {setLoggedUser}=useContext(AppContext)
   const navigate=useNavigate()
-/*
-  useEffect(()=>{
-    onAuthStateChanged(auth,user=>{
-      if(user)
-      {
-        setUser(user)       
-      }
-      else{
-        setUser(null)
-      }
-    
-    })
-    },[])
-    
-*/
-
-
 
   const handleSubmit=async(event)=>{
     event.preventDefault()
@@ -35,7 +17,7 @@ const Login = () => {
     const password=event.target[1].value;
     await signInWithEmailAndPassword(auth,email,password)
     .then((authUser)=>{    
-      setUser(authUser.user)
+      setLoggedUser(authUser.user)
       navigate('/')
   
     })

@@ -1,4 +1,4 @@
-import React,{useContext} from 'react'
+import React from 'react'
 import { RegisterContainer,Wrapper,Title,Form,InputWrapper,FileWrapper,Label,Input,Button,SignIn,UploadLabel} from './style';
 import AddAPhotoOutlinedIcon from '@mui/icons-material/AddAPhotoOutlined';
 import { ToastContainer, toast } from 'react-toastify';
@@ -9,7 +9,6 @@ import { auth, db, storage } from '../../firebase';
 import { getDownloadURL } from 'firebase/storage';
 import { ref, uploadBytesResumable } from 'firebase/storage';
 import { doc, setDoc } from '@firebase/firestore';
-import { AppContext } from '../../Context/AppContextProvider';
 
 
 const Register = () => {
@@ -52,12 +51,14 @@ const Register = () => {
                               email:email,
                                photoURL:downloadURL
                              })
+
+                             setDoc(doc(db,'userChats',res.user.uid),{})
                              navigate('/')
                             
                         
                    });  
 
-                  
+                 
                  
                   }
                 )

@@ -7,16 +7,17 @@ import { Routes,Route } from 'react-router-dom';
 import { AppContext } from './Context/AppContextProvider';
 import Register from './Pages/Register/Register';
 
-function App() {
-  const {user}=useContext(AppContext)
 
+function App() {
+  const {loggedUser}=useContext(AppContext)   
   return (
     <div className="App">
-
      <Routes>
-      <Route path='/login' element={<Login/>} />
-      <Route path='/register' element={<Register/>} />
-      <Route path='/' element={<Home/>} />
+      <Route path='/'>
+          <Route index element={loggedUser? (<Home/>):(<Login/>)} />
+          <Route path='login' element={<Login />}/>
+          <Route path='register' element={<Register/>}  />
+      </Route>
      </Routes>
 
  
