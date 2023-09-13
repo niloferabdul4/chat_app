@@ -6,7 +6,7 @@ import { AppContext } from '../../Context/AppContextProvider';
 import { useNavigate } from 'react-router-dom';
 const Navbar = () => {
   const {loggedUser,setLoggedUser}=useContext(AppContext)
-
+  console.log(loggedUser)
   const navigate=useNavigate()
   const logoutFn=()=>{
      signOut(auth)

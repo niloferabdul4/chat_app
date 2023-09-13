@@ -20,7 +20,7 @@ const Register = () => {
     const handleSubmit=async(event)=>
     {
         event.preventDefault();
-        const name=event.target[0].value;
+        const displayName=event.target[0].value;
         const email=event.target[1].value;
         const password=event.target[2].value
         const file=event.target[3].files[0]
@@ -29,7 +29,7 @@ const Register = () => {
           const res=await createUserWithEmailAndPassword(auth,email,password)    
 
           //create a unique image name    
-          const storageRef=ref(storage,name)
+          const storageRef=ref(storage,displayName)
    
          //Upload file to the object 'images/mountains.jpg'   
            uploadBytesResumable(storageRef, file).then(()=>
@@ -38,7 +38,7 @@ const Register = () => {
                                                                                             // Handle successful uploads on complete    
                    getDownloadURL(storageRef).then(async(downloadURL) => {
                            await updateProfile(res.user,{                      //  update user profile 
-                                 displayName:res.user.name,
+                                 displayName,
                                  photoURL:downloadURL
                              })                    
 
@@ -47,9 +47,9 @@ const Register = () => {
 
                              setDoc(doc(db,'users',res.user.uid),{              
                               uid:res.user.uid,
-                              displayName:name,
-                              email:email,
-                               photoURL:downloadURL
+                              displayName,
+                              email,
+                              photoURL:downloadURL
                              })
 
                              setDoc(doc(db,'userChats',res.user.uid),{})
@@ -102,7 +102,7 @@ const Register = () => {
                                </UploadLabel>
                           <ToastContainer/>      
                        </FileWrapper>
-                       <Button type='submit'>Continue</Button>                                            
+                       <Button type='submit'>Sign Up</Button>                                            
                        <SignIn>Already have an account?  <Link to='/login'> Sign In </Link> </SignIn>
               </Form>
            </Wrapper>                

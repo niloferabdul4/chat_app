@@ -13,9 +13,9 @@ const AppContextProvider = ({children}) => {
  const [users,setUsers]=useState([])
  
  useEffect(()=>{
-  const unSub=onAuthStateChanged(auth,(authUser)=>{
-   
+  const unSub=onAuthStateChanged(auth,(authUser)=>{   
     setLoggedUser(authUser)
+    console.log(authUser)
   
  })
 
