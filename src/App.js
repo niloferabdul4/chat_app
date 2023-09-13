@@ -11,28 +11,13 @@ function App() {
 
   return (
     <div className="App">
-   {
-     !user?
-     (<Routes>
+
+     <Routes>
       <Route path='/login' element={<Login/>} />
       <Route path='/register' element={<Register/>} />
-     </Routes>)
-:
-(<Routes>
-  <Route path='/' element={<Home/>} />
+      <Route path='/' element={<Home/>} />
+     </Routes>
 
- </Routes>)
-   }
-      <>
-     
-        <Login/>
-       <Register/>
-        <Home/>
- 
-      
-      </> 
-      
-    
  
     </div>
   );

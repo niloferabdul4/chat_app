@@ -2,13 +2,17 @@ import React, { useState } from 'react'
 import { RegisterContainer,Wrapper,Title,Form,InputWrapper,FileWrapper,Label,Input,Button,SignIn,UploadLabel} from './style';
 import AddAPhotoOutlinedIcon from '@mui/icons-material/AddAPhotoOutlined';
 import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Link, useNavigate } from 'react-router-dom';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../firebase';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { auth, db, storage } from '../../firebase';
+import { getDownloadURL } from 'firebase/storage';
+import { ref, uploadBytesResumable } from 'firebase/storage';
+import { addDoc, doc, setDoc } from '@firebase/firestore';
 
 
 const Register = () => {
-    const [formData,setFormData]=useState({Name:'',Email:'',Password:'',Photo:''})
+    const [formData,setFormData]=useState({name:'',email:'',password:'',file:''})
     const [error,setError]=useState(false)
     const navigate=useNavigate()
 
@@ -19,6 +23,7 @@ const Register = () => {
     {
         const {name,value}=event.target;
         setFormData(prevData=>({...prevData,[name]:value}))
+       
     }
 
 
@@ -27,27 +32,50 @@ const Register = () => {
     const handleSubmit=async(event)=>
     {
         event.preventDefault();
-      await createUserWithEmailAndPassword(auth,formData.Email,formData.Password)
-      .then((auth)=>{
-        if(auth)
+
+        /*
+        try
         {
-            navigate('/')
+          const res=await createUserWithEmailAndPassword(auth,formData.email,formData.password)    
+
+          //create a unique image name    
+          const storageRef=ref(storage,formData.name)
+   
+         //Upload file to the object 'images/mountains.jpg'   
+           uploadBytesResumable(storageRef, formData.file).then(()=>
+              
+                 {
+                                                                                            // Handle successful uploads on complete    
+                   getDownloadURL(storageRef).then(async(downloadURL) => {
+                           await updateProfile(res.user,{
+                                 displayName:res.user.name,
+                                 photoURL:downloadURL
+                             })                    //  update user profile 
+
+                             setDoc(doc(db,'users',res.user.uid),{               // add user profile to users collection
+                              uid:res.user.uid,
+                              displayName:formData.name,
+                              email:formData.email,
+                               photoURL:downloadURL
+                             })
+                        
+                   });  
+
+                  
+                 
+                  }
+                )
+
         }
-        })
-       .catch((error)=>
-       {
-        setError(true)
-        toast.error(error.message)
-       })
+        catch(error)
+        {
+           toast.error(error.message)
+        }
+*/
+
 
 }
 
-/**********     File Upload Function    **********/
-
-    const fileUpload=()=>
-    {
-
-    }
   return (
     <div>
         <RegisterContainer >           
@@ -56,11 +84,11 @@ const Register = () => {
               <Form onSubmit={handleSubmit}>
                         <InputWrapper>
                                <Label htmlFor='name'>Name</Label>
-                               <Input  required
+                               <Input  
                                        type='text' 
                                        id='name'
-                                       value={formData.Name}
-                                       name='Name'  
+                                       value={formData.name}
+                                       name='name'  
                                        placeholder='Name'
                                        onChange={handleChange}
                                />
@@ -69,12 +97,12 @@ const Register = () => {
 
                        <InputWrapper>
                                <Label htmlFor='email'>Email</Label>
-                               <Input  required
+                               <Input 
                                        type='email'
                                        id='email'
                                        placeholder='Email'
-                                       value={formData.Email}
-                                       name='Email'
+                                       value={formData.email}
+                                       name='email'
                                        onChange={handleChange}
                                 />                                                                   
                               
@@ -82,12 +110,12 @@ const Register = () => {
                        </InputWrapper>
                        <InputWrapper>
                                <Label htmlFor='pwd'>Password</Label>
-                               <Input  required
+                               <Input 
                                        type='password' 
                                        id='pwd'
                                        placeholder='Password'
-                                       value={formData.Password}
-                                       name='Password'
+                                       value={formData.password}
+                                       name='password'
                                        onChange={handleChange}
                                />                                                                  
                               
@@ -95,14 +123,15 @@ const Register = () => {
                        </InputWrapper>
                        <FileWrapper>
                               
-                               <Input  required
+                               <Input  
                                        type='file' 
                                        id='file'
-                                       value={formData.Photo}
+                                       value={formData.file}
+                                       onChange={handleChange}
                                        style={{display:'none'}}
                                />
                                <UploadLabel htmlFor='file'>                             
-                                 <AddAPhotoOutlinedIcon onClick={fileUpload} style={{color:'grey',cursor:'pointer'}}/>
+                                 <AddAPhotoOutlinedIcon  style={{color:'grey',cursor:'pointer'}}/>
                                  <span>Add an avatar</span>
                                </UploadLabel>
                           <ToastContainer/>      
