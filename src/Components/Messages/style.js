@@ -20,7 +20,7 @@ const MessagesContainer=styled.div`
 const MessageContent=styled.div`
     
     gap: 10px;
-    margin-bottom:20px;
+    margin-bottom:10px;
     span {
         background-color: ${props=>props.id==='owner' ? 'lightgreen' :'white'};
         padding: 10px 20px;

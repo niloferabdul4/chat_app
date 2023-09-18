@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
-import {NavbarContainer,LeftWrapper,Logo,RightWrapper,UserName,LogoutButton,Image} from './style';
+import {NavbarContainer,LeftWrapper,Logo,RightWrapper,UserName,LogoutButton} from './style';
+import { Image } from '../Users/style';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../firebase';
 import { AppContext } from '../../Context/AppContextProvider';

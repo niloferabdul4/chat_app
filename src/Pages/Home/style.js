@@ -9,8 +9,8 @@ const HomeContainer=styled.div`
 
 `
 const Box=styled.div`
-    width:65%;
-    height:80%;
+    width:75%;
+    height:90%;
     border-radius: 10px;
     overflow: hidden;
     display: flex;

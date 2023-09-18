@@ -16,15 +16,16 @@ const ChatContainer=styled.div`
 
 
 const ChatNavContainer=styled.div`
-  height:70px;
+  height:80px;
   width:100%;
   background-color: #075E54;
         display: flex;
         align-items: center;
-        justify-content: flex-end;
-        padding: 10px;
+        justify-content: space-between;
+        padding: 20px;
         color: lightgray;
         position:sticky;
+        border-left:2px solid grey;
 
 `
 
@@ -36,7 +37,7 @@ justify-content:space-between;
 align-items: center;
 color:white;
 gap:15px;
-
+width:100%;
 `
 
 const InputWrapper=styled.div`

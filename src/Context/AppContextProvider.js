@@ -1,6 +1,6 @@
 
 import { onAuthStateChanged } from 'firebase/auth'
-import React,{createContext,useEffect,useState} from 'react'
+import React,{createContext,useEffect,useReducer,useState} from 'react'
 import { auth } from '../firebase'
 
 
@@ -10,24 +10,33 @@ const AppContextProvider = ({children}) => {
  const [chats,setChats]=useState([])
  const [newMessage,setNewMessage]=useState('')
  const [loggedUser,setLoggedUser]=useState({})
- const [selectedUser,setSelectedUser]=useState(null)
- const [userChats,setUserChats]=useState([])
  const [usersList,setUsersList]=useState([])
  const [searchText,setSearchText]=useState('')
  const [error,setError]=useState(false)
  const [selected,setSelected]=useState(false)
- const [selectedProfile,setSelectedProfile]=useState({})
+ const [selectedProfile,setSelectedProfile]=useState('')
+
 
  useEffect(()=>{
   const unSub=onAuthStateChanged(auth,(authUser)=>{   
-    setLoggedUser(authUser)
-      
+    setLoggedUser(authUser)      
  })
 
 return ()=>{
   unSub()
 }
 },[])
+const initialState={
+  chats:[],
+  usersList:[],
+  newMessage:'',
+  loggedUser:{},
+  searchText:'',
+  selectedProfile:'',
+  error:false,
+  selected:false
+}
+const [state,dispatch]=useReducer(reducer,initialState)
 
 
   return (
@@ -35,13 +44,12 @@ return ()=>{
       <AppContext.Provider value={{loggedUser,setLoggedUser,
                                     chats,setChats,
                                     newMessage,setNewMessage,
-                                    selectedUser,setSelectedUser,
                                     searchText,setSearchText,
                                     error,setError,
                                     usersList,setUsersList,
-                                    userChats,setUserChats,
                                     selected,setSelected,
-                                    selectedProfile,setSelectedProfile
+                                    selectedProfile,setSelectedProfile,
+                                   
                                     }}>
         {children}
       </AppContext.Provider>

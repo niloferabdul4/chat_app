@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
 const NavbarContainer=styled.div`
-  height:70px;
+  height:80px;
   width:100%;
   border-bottom:1px solid lightgrey;
   display: flex;
@@ -16,13 +16,15 @@ const NavbarContainer=styled.div`
 `
 
 const LeftWrapper=styled.div`
-  
+   display: flex;
+   flex-direction: row;
+   gap:10px;
  
 `
 
 const Logo=styled.p`
 font-weight:600;
-font-size:1.4rem;
+font-size:1.5rem;
 
 `
 
@@ -37,7 +39,7 @@ const RightWrapper=styled.div`
 `
 
 const UserName=styled.p`
-font-size: 1.3rem;
+font-size: 1.4rem;
 
 `
 

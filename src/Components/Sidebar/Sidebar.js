@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import Navbar from '../Navbar/Navbar'
 import Users from '../Users/Users'
-import Search from '../Search/Search'
 import {SidebarContainer} from './style'
 
 
@@ -11,7 +10,6 @@ const Sidebar = () => {
     <>   
     <SidebarContainer>     
         <Navbar/>
-        <Search/>
         <Users/>
     </SidebarContainer>
     </>

@@ -54,7 +54,7 @@ const Register = () => {
                               
                              })
 
-                             setDoc(doc(db,'userChats',res.user.uid),{})
+                           
                              navigate('/')
                             
                         

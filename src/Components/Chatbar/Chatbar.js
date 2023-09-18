@@ -10,7 +10,8 @@ import { AppContext } from '../../Context/AppContextProvider';
 import { Timestamp, addDoc, collection, serverTimestamp } from '@firebase/firestore';
 import { db } from '../../firebase';
 import { Label } from '../../Pages/Register/style';
-
+import { Image } from '../Users/style';
+import { LeftWrapper, RightWrapper } from '../Navbar/style';
 
 
 const Chatbar = () => {
@@ -24,16 +25,22 @@ const Chatbar = () => {
 
   const sendMessage=async()=>
   {
-      await addDoc(collection(db,'chats'),{
-      uid:loggedUser.uid,
+     const user1=loggedUser.uid;
+     const user2=selectedProfile.data.uid
+     const combinedId= user1 > user2 ? `${user1+user2}` : `${user2+user1}`
+      //console.log(user1)
+      //console.log(user2)
+      await addDoc(collection(db,'chats',combinedId,'messages'),{
       displayName:loggedUser.displayName,
       message:newMessage,
-      senderId:loggedUser.uid,
-      receiverId:selectedProfile.uid,
-      timestamp:Timestamp.now()
+      senderId:user1,
+      receiverId:user2,
+      timestamp:Timestamp.fromDate(new Date())
+      
+      
     })
 
-   console.log(selectedProfile)
+   
     /******  If no input entered ******* */
 
     if (newMessage.trim()==='')
@@ -42,7 +49,8 @@ const Chatbar = () => {
       return;
     }
     setNewMessage('')
-    
+   
+
     
   }
   return (
@@ -50,9 +58,17 @@ const Chatbar = () => {
       <ChatContainer>
       <ChatNavContainer>
             <Wrapper>
-                <VideoCameraBackOutlinedIcon fontSize='large' />
-                <PersonAddAlt1OutlinedIcon fontSize='large'  />
-                <MoreHorizOutlinedIcon fontSize='large' />
+             {selectedProfile!=='' &&  <LeftWrapper>
+                  <Image src={selectedProfile.data.photoURL} alt=''/>
+                  <p style={{fontFamily:'sans-serif',fontWeight:'bold',fontSize:'20px',padding:'10px 0px'}}>{selectedProfile.data.displayName}</p>
+              </LeftWrapper>
+}
+              <RightWrapper>
+                  <VideoCameraBackOutlinedIcon fontSize='large' />
+                  <PersonAddAlt1OutlinedIcon fontSize='large'  />
+                  <MoreHorizOutlinedIcon fontSize='large' />
+              </RightWrapper>
+                
             </Wrapper>           
       </ChatNavContainer>
       <span style={{display:'flex', height:'calc(100% - 130px)',overflowY:'scroll',width:'100%',padding:'30px'}} >

@@ -27,4 +27,32 @@ const UsersContainer=styled.div`
         }
 `
 
-export {UsersContainer}
+
+const Wrapper=styled.div`
+    width:100%;
+    display: flex;
+    flex-direction:row;
+    align-items: center;
+    cursor: pointer;
+    gap:10px;
+    padding:20px;
+    background: transparent;
+        &:hover{
+    background-color:whitesmoke;
+    }
+`
+
+const UserName=styled.p`
+   font-size:1.3rem;
+   font-weight:500;
+`
+
+const Image=styled.img`
+   border-radius: 50%;
+    height:50px;
+    width:50px;
+    cursor:pointer;
+    object-fit:cover;
+   
+`
+export {UsersContainer,Wrapper,UserName,Image}
