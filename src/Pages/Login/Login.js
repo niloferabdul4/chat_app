@@ -18,6 +18,7 @@ const Login = () => {
     await signInWithEmailAndPassword(auth,email,password)
     .then((authUser)=>{    
       setLoggedUser(authUser.user)
+      console.log(authUser.user)
       navigate('/')
   
     })

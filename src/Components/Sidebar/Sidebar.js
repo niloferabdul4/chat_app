@@ -12,7 +12,7 @@ const Sidebar = () => {
     <SidebarContainer>     
         <Navbar/>
         <Search/>
-      <Users/>
+        <Users/>
     </SidebarContainer>
     </>
   )

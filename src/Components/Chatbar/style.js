@@ -5,19 +5,20 @@ const ChatContainer=styled.div`
   flex:2;
   width:100%;
  // border:1px solid grey;
-  background-color:lavenderblush; 
+  background-color:#ECFFDC; 
   display: flex;
   flex-direction:column;
   align-items:flex-start;
   justify-content: space-between;
-  overflow: hidden;
+
+
 `
 
 
 const ChatNavContainer=styled.div`
-  height:60px;
+  height:70px;
   width:100%;
-  background-color: #3e3c51;
+  background-color: #075E54;
         display: flex;
         align-items: center;
         justify-content: flex-end;
@@ -42,8 +43,8 @@ const InputWrapper=styled.div`
   
   height:60px;
   width:100%;
-  background-color:lightgrey;
-        padding: 15px;
+  background-color:lightgreen;
+  padding: 10px;
   display:flex;
   justify-content: space-between;
   gap:10px;
@@ -52,10 +53,11 @@ const InputWrapper=styled.div`
 `
 const Input=styled.input`
 flex:0.9;
-padding:15px;
+padding:20px;
 border:none;
 outline:none;
- padding:10px;
+
+ font-size: 1.1rem;
 `
 
 const ChatIcons=styled.div`
@@ -63,12 +65,13 @@ const ChatIcons=styled.div`
  gap:15px;
  display:flex;
  justify-content: flex-start;
-
+ align-items: center;
 
 `
 
 const Button=styled.button`
   border:none;
+  font-size:1.1rem;
   background-color:#3e3c51 ;
   padding: 8px;
   color:white;

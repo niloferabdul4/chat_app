@@ -6,9 +6,11 @@ const SidebarContainer=styled.div`
   display: flex;
   flex-direction:column;
   align-items:flex-start;
-  background-color: #d6d6d6;
- 
- 
+  background-color: lightgreen;
+  overflow: hidden;
+
+
+  
 `
 
 export {SidebarContainer}

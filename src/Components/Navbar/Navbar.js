@@ -6,7 +6,6 @@ import { AppContext } from '../../Context/AppContextProvider';
 import { useNavigate } from 'react-router-dom';
 const Navbar = () => {
   const {loggedUser,setLoggedUser}=useContext(AppContext)
-  console.log(loggedUser)
   const navigate=useNavigate()
   const logoutFn=()=>{
      signOut(auth)
@@ -20,11 +19,13 @@ const Navbar = () => {
     <>
       <NavbarContainer>
         <LeftWrapper>
-            <Logo>WhatsApp</Logo>
+            <Logo>Messenger</Logo>
         </LeftWrapper>         
          <RightWrapper>
-             <Image src={loggedUser.photoURL} alt=''/>
-             <UserName>{loggedUser.displayName}</UserName>
+             <span style={{display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center',gap:'10px'}}>
+                <Image src={loggedUser.photoURL} alt=''/>
+                <UserName>{loggedUser.displayName}</UserName>
+             </span>            
              <LogoutButton onClick={logoutFn}>Logout</LogoutButton>
          </RightWrapper>
       </NavbarContainer>

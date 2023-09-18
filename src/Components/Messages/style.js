@@ -2,45 +2,36 @@ import styled from "styled-components";
 
 const Container=styled.div`
   display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
   width:100%;
-  justify-content:  ${props=>props.id==='owner' ?  'flex-end':'flex-start'};
+  height:calc(100%-150px);
+         
+
 `
 
 const MessagesContainer=styled.div`
   display:flex;
-  flex-direction: ${props=>props.id==='owner' ?  'row-reverse':'row'};
-  justify-content:flex-start;
-  align-items:flex-start;
-  gap:50px;
+  flex-direction: column;
+  gap:10px;
 
 `
-
-const MessageInfo=styled.div`
-   margin-right: 30px;
-   p{
-    color:grey;
-    font-size:14px;
-   }
-
-`
-
 
 const MessageContent=styled.div`
-     max-width: 100%;
-            display: flex;
-            flex-direction: column;
-            
-            gap: 10px;
-
-            p {
-              background-color: white;
-              padding: 10px 20px;
-              border-radius: ${props=>props.id==='owner' ?  '20px 0px 20px 20px' :'0px 20px 20px 20px'};
-              max-width: max-content;
-            }
-
+    
+    gap: 10px;
+    margin-bottom:20px;
+    span {
+        background-color: ${props=>props.id==='owner' ? 'lightgreen' :'white'};
+        padding: 10px 20px;
+        border-radius:${props=>props.id==='owner' ? '10px 0px 10px 10px' : '0px 10px 10px 10px'};
+        max-width: max-content;
+        font-size: 1.15rem;
+        float:${props=>props.id==='owner' ? 'right' :'left'};
+    
+      }
 
 `
 
 
-export {MessageContent,MessageInfo,MessagesContainer,Container}
+export {MessageContent,MessagesContainer,Container}
