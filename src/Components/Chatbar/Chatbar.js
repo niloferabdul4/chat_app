@@ -7,33 +7,52 @@ import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 import AttachFileOutlinedIcon from '@mui/icons-material/AttachFileOutlined';
 import SentimentSatisfiedOutlinedIcon from '@mui/icons-material/SentimentSatisfiedOutlined';
 import { AppContext } from '../../Context/AppContextProvider';
-import { addDoc, collection, serverTimestamp } from '@firebase/firestore';
+import { Timestamp, addDoc, collection, doc, orderBy, serverTimestamp, setDoc, updateDoc } from '@firebase/firestore';
 import { db, storage } from '../../firebase';
 import { Label } from '../../Pages/Register/style';
 import { Image } from '../Users/style';
 import { LeftWrapper, RightWrapper } from '../Navbar/style';
 import { ref,getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import { ToastContainer,toast } from 'react-toastify';
+import { updateProfile } from 'firebase/auth';
 
 
 const Chatbar = () => {
   const {state:{newMessage,loggedUser,selectedContact,newImage},dispatch}=useContext(AppContext)  
+     
+
+ const handleFile=(event)=>{
   
- 
+    dispatch({type:'ADD_IMAGE' ,payload:event.target.files[0]})
+
+ }
 
   const sendMessage=async(event)=>
   {
      event.preventDefault()
      const user1=loggedUser.uid;
+     console.log(loggedUser.uid)
      const user2=selectedContact.data.uid
      const combinedId= user1 > user2 ? `${user1+user2}` : `${user2+user1}`
+   const chatsRef=collection(db,'chats',combinedId,'messages')
  
     /*******   Add Image   ************/
     let url;
-    if(newImage)
+    if(newImage==='')    
     {
-      const storageRef=ref(storage,`images/${newImage}`)           // create a reference to image
+      await addDoc(chatsRef,{
+        displayName:loggedUser.displayName,
+        message:newMessage,
+        senderId:user1,
+        receiverId:user2,
+        timestamp:Timestamp.fromDate(new Date())
       
+      })
+    }
+    else
+    {
+
+      const storageRef=ref(storage,`images/${newImage}`)           // create a reference to image      
       const uploadTask=uploadBytesResumable(storageRef,newImage)
       uploadTask.on(
          error=>{
@@ -41,21 +60,22 @@ const Chatbar = () => {
          },
          ()=>{
           getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl)=>{
-             addDoc(collection(db,'chats',combinedId,'messages'),{
-              displayName:loggedUser.displayName,
+             url=downloadUrl;
+             dispatch({type:'ADD_IMAGE',payload:downloadUrl})
+            addDoc(chatsRef,{   
               message:newMessage,
               senderId:user1,
               receiverId:user2,
-              media:downloadUrl || '',
-              timestamp:serverTimestamp()      
-              
+              media:url,
+              timestamp:Timestamp.fromDate(new Date())  ,  
+            
             })
-        
+            
           }
           )
-         }
-        
+         }        
       )
+        dispatch({type:'ADD_IMAGE',payload:''})
     }
     
     
@@ -66,7 +86,10 @@ const Chatbar = () => {
       alert('Please enter a valid message')
       return;
     }
+
+    
     dispatch({type:'ADD_MESSAGE',payload:''})
+  
     
   }
 
@@ -99,7 +122,7 @@ const Chatbar = () => {
         <InputWrapper>        
             <Input type='text' placeholder='Type a message' onChange={(event)=>{dispatch({type:'ADD_MESSAGE',payload:event.target.value})}} value={newMessage} />
             <ChatIcons>
-                 <Input type="file"  style={{ display: "none" }}  id="file"  onChange={(event)=>{dispatch({type:'ADD_IMAGE',payload:event.target.value})}}/>
+                 <Input type="file"  style={{ display: "none" }}  id="file"  onChange={handleFile}/>
                  <Label htmlFor='file'>
                       <AttachFileOutlinedIcon fontSize='large'/>
                  </Label>

@@ -9,14 +9,17 @@ import Register from './Pages/Register/Register';
 
 
 function App() {
-  const {state:{loggedUser}}=useContext(AppContext)   
+  const {state:{loggedUser}}=useContext(AppContext)  
+  
+  
   return (
     <div className="App">
+      
      <Routes>
       <Route path='/'>
           <Route index element={loggedUser? (<Home/>):(<Login/>)} />
           <Route path='login' element={<Login />}/>
-          <Route path='register' element={<Register/>}  />
+          <Route path='register' element={<Register />} />
       </Route>
      </Routes>
 
