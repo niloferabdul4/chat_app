@@ -15,7 +15,7 @@ import { AppContext } from '../../Context/AppContextProvider';
 const Register = () => {
 
   const navigate=useNavigate()
-  const {newMessage}=useContext(AppContext)
+
 /**********    HandleSubmit Function   *********/
 
     const handleSubmit=async(event)=>

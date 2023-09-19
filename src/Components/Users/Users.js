@@ -1,4 +1,4 @@
-import React, { useContext,useEffect } from 'react'
+import React, { useContext,useEffect, useState } from 'react'
 import { UsersContainer,Wrapper,UserName,Image} from './style'
 import { AppContext } from '../../Context/AppContextProvider'
 import { onSnapshot,collection, addDoc,query,orderBy,where, doc } from '@firebase/firestore'
@@ -7,8 +7,8 @@ import { db } from '../../firebase'
 
 const Users = () => {
   
-  const {usersList,setUsersList,loggedUser,setSelectedProfile,selectedProfile,setChats}=useContext(AppContext)
-
+  const {state:{usersList,loggedUser,selectedContact},dispatch}=useContext(AppContext)
+ 
   useEffect(()=>{
 
     const usersRef=collection(db,'users')
@@ -18,7 +18,8 @@ const Users = () => {
           id:doc.id,
           data:doc.data()
           }))
-          setUsersList(res)
+          dispatch({type:'LOAD_USERS',payload:res})
+        
         
           })
 
@@ -26,14 +27,16 @@ const Users = () => {
   },[])
 
   const selectUser=(user)=>{
-     setSelectedProfile(user)         
+    
+    dispatch({type:'SELECTED_CONTACT',payload:user})        
      const user1=loggedUser.uid;                                                //  logged user
-     const user2=selectedProfile.data.uid                                       // selectedProfile
+     const user2=user.data.uid   
+                           // selectedProfile
      const combinedId= user1 > user2 ? `${user1+user2}` : `${user2+user1}`      // combine both
 
-      onSnapshot(collection(db,'chats',combinedId,'messages'),snapshot=>{
+      onSnapshot(collection(db,'chats',combinedId,'messages'),orderBy('timestamp','asc'),snapshot=>{
         const res=snapshot.docs.map(doc=>({id:doc.id,data:doc.data()}))
-        setChats(res)
+        dispatch({type:'LOAD_CHATS',payload:res})
        // console.log(res)
   })    
 
@@ -45,7 +48,7 @@ const Users = () => {
         <p style={{fontFamily:'sans-serif',fontWeight:'bold',fontSize:'24px',padding:'20px 0px',borderBottom:'1px solid grey'}}>Contacts</p>
     {usersList?.map(user=>{return   <>
     
-        <Wrapper role='button' key={user.id}  onClick={()=>selectUser(user)}>           
+        <Wrapper role='button' key={user.id}  onClick={()=>selectUser(user)}  id={selectedContact===user ? 'selected':''} >           
              <Image src={user.data.photoURL} alt=''/>
              <span style={{display:'flex',flexDirection:'column', justifyContent:'center',alignItems:'flex-start',marginLeft:'15px'}}>
                  <UserName>{user.data.displayName}</UserName>  

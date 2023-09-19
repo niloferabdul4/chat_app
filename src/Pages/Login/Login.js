@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify'
 import { NavLink } from 'react-router-dom';
 const Login = () => {
-  const {setLoggedUser}=useContext(AppContext)
+  const {dispatch}=useContext(AppContext)
   const navigate=useNavigate()
 
   const handleSubmit=async(event)=>{
@@ -17,7 +17,7 @@ const Login = () => {
     const password=event.target[1].value;
     await signInWithEmailAndPassword(auth,email,password)
     .then((authUser)=>{    
-      setLoggedUser(authUser.user)
+      dispatch({type:'SET_LOGGED_USER',payload:authUser.user})
       console.log(authUser.user)
       navigate('/')
   

@@ -4,13 +4,14 @@ import { AppContext } from '../../Context/AppContextProvider'
 
 const Messages = () => {
 
-const {loggedUser,selectedProfile,setChats,chats,messages,setMessages}=useContext(AppContext)
-
+const {state:{loggedUser,selectedContact,chats}}=useContext(AppContext)
+//console.log(chats)
+//console.log(loggedUser.displayName,loggedUser.uid)
   return (
     <>
       <Container>     
         <MessagesContainer> 
-          {selectedProfile ==='' ? 
+          {selectedContact ==='' ? 
        ( <p style={{fontSize:'24px'}}>Select a user to start a conversation</p> )
           :
        ( 
@@ -21,6 +22,7 @@ const {loggedUser,selectedProfile,setChats,chats,messages,setMessages}=useContex
               <span style={{display:'flex',flexDirection:'column',alignItems:'flex-start',gap:'10px'}}>
                 <b style={{color:'orangered',fontSize:'1.2rem'}}>{user.data.displayName}</b>
                 <p style={{fontSize:'1.2rem'}}>{user.data.message}</p>
+               
               </span>
           </MessageContent>        
            </>})  

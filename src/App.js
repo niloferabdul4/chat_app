@@ -9,7 +9,7 @@ import Register from './Pages/Register/Register';
 
 
 function App() {
-  const {loggedUser}=useContext(AppContext)   
+  const {state:{loggedUser}}=useContext(AppContext)   
   return (
     <div className="App">
      <Routes>

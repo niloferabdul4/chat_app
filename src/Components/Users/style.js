@@ -36,9 +36,10 @@ const Wrapper=styled.div`
     cursor: pointer;
     gap:10px;
     padding:20px;
-    background: transparent;
+    background: ${props=>props.id==='selected' ? 'whitesmoke' : 'transparent'};
         &:hover{
     background-color:whitesmoke;
+
     }
 `
 

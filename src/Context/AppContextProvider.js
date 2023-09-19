@@ -2,24 +2,16 @@
 import { onAuthStateChanged } from 'firebase/auth'
 import React,{createContext,useEffect,useReducer,useState} from 'react'
 import { auth } from '../firebase'
-
+import reducer from './reducer'
 
 export const AppContext=createContext()
 
 const AppContextProvider = ({children}) => { 
- const [chats,setChats]=useState([])
- const [newMessage,setNewMessage]=useState('')
- const [loggedUser,setLoggedUser]=useState({})
- const [usersList,setUsersList]=useState([])
- const [searchText,setSearchText]=useState('')
- const [error,setError]=useState(false)
- const [selected,setSelected]=useState(false)
- const [selectedProfile,setSelectedProfile]=useState('')
 
 
  useEffect(()=>{
   const unSub=onAuthStateChanged(auth,(authUser)=>{   
-    setLoggedUser(authUser)      
+    dispatch({type:'SET_LOGGED_USER',payload:authUser})     
  })
 
 return ()=>{
@@ -30,9 +22,10 @@ const initialState={
   chats:[],
   usersList:[],
   newMessage:'',
+  newImage:'',
   loggedUser:{},
   searchText:'',
-  selectedProfile:'',
+  selectedContact:'',
   error:false,
   selected:false
 }
@@ -41,16 +34,7 @@ const [state,dispatch]=useReducer(reducer,initialState)
 
   return (
     <>
-      <AppContext.Provider value={{loggedUser,setLoggedUser,
-                                    chats,setChats,
-                                    newMessage,setNewMessage,
-                                    searchText,setSearchText,
-                                    error,setError,
-                                    usersList,setUsersList,
-                                    selected,setSelected,
-                                    selectedProfile,setSelectedProfile,
-                                   
-                                    }}>
+      <AppContext.Provider value={{state,dispatch }}>
         {children}
       </AppContext.Provider>
     </>

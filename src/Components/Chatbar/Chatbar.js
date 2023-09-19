@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Messages from '../Messages/Messages'
 import { ChatContainer,ChatNavContainer,Wrapper,Input, InputWrapper,ChatIcons,Button} from './style'
 import VideoCameraBackOutlinedIcon from '@mui/icons-material/VideoCameraBackOutlined';
@@ -7,60 +7,81 @@ import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 import AttachFileOutlinedIcon from '@mui/icons-material/AttachFileOutlined';
 import SentimentSatisfiedOutlinedIcon from '@mui/icons-material/SentimentSatisfiedOutlined';
 import { AppContext } from '../../Context/AppContextProvider';
-import { Timestamp, addDoc, collection, serverTimestamp } from '@firebase/firestore';
-import { db } from '../../firebase';
+import { addDoc, collection, serverTimestamp } from '@firebase/firestore';
+import { db, storage } from '../../firebase';
 import { Label } from '../../Pages/Register/style';
 import { Image } from '../Users/style';
 import { LeftWrapper, RightWrapper } from '../Navbar/style';
+import { ref,getDownloadURL, uploadBytesResumable } from 'firebase/storage';
+import { ToastContainer,toast } from 'react-toastify';
 
 
 const Chatbar = () => {
-  const {newMessage,setNewMessage,loggedUser,selectedProfile}=useContext(AppContext)  
+  const {state:{newMessage,loggedUser,selectedContact,newImage},dispatch}=useContext(AppContext)  
+  
+ 
 
-  const handleChange=(event)=>
+  const sendMessage=async(event)=>
   {
-    setNewMessage(event.target.value)
-    
-  }
-
-  const sendMessage=async()=>
-  {
+     event.preventDefault()
      const user1=loggedUser.uid;
-     const user2=selectedProfile.data.uid
+     const user2=selectedContact.data.uid
      const combinedId= user1 > user2 ? `${user1+user2}` : `${user2+user1}`
-      //console.log(user1)
-      //console.log(user2)
-      await addDoc(collection(db,'chats',combinedId,'messages'),{
-      displayName:loggedUser.displayName,
-      message:newMessage,
-      senderId:user1,
-      receiverId:user2,
-      timestamp:Timestamp.fromDate(new Date())
+ 
+    /*******   Add Image   ************/
+    let url;
+    if(newImage)
+    {
+      const storageRef=ref(storage,`images/${newImage}`)           // create a reference to image
       
-      
-    })
-
-   
+      const uploadTask=uploadBytesResumable(storageRef,newImage)
+      uploadTask.on(
+         error=>{
+         toast.error(error.message)
+         },
+         ()=>{
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl)=>{
+             addDoc(collection(db,'chats',combinedId,'messages'),{
+              displayName:loggedUser.displayName,
+              message:newMessage,
+              senderId:user1,
+              receiverId:user2,
+              media:downloadUrl || '',
+              timestamp:serverTimestamp()      
+              
+            })
+        
+          }
+          )
+         }
+        
+      )
+    }
+    
+    
     /******  If no input entered ******* */
 
-    if (newMessage.trim()==='')
+    if (newMessage.trim()==='' && !newImage)
     {
       alert('Please enter a valid message')
       return;
     }
-    setNewMessage('')
-   
-
+    dispatch({type:'ADD_MESSAGE',payload:''})
     
   }
+
+ 
+
+ 
+     
   return (
     <>
       <ChatContainer>
       <ChatNavContainer>
             <Wrapper>
-             {selectedProfile!=='' &&  <LeftWrapper>
-                  <Image src={selectedProfile.data.photoURL} alt=''/>
-                  <p style={{fontFamily:'sans-serif',fontWeight:'bold',fontSize:'20px',padding:'10px 0px'}}>{selectedProfile.data.displayName}</p>
+             {selectedContact!=='' &&  <LeftWrapper>
+                  <Image src={selectedContact.data.photoURL} alt=''/>
+                  <p style={{fontFamily:'sans-serif',fontWeight:'bold',fontSize:'20px',padding:'10px 0px'}}>{selectedContact.data.displayName}</p>
               </LeftWrapper>
 }
               <RightWrapper>
@@ -73,12 +94,12 @@ const Chatbar = () => {
       </ChatNavContainer>
       <span style={{display:'flex', height:'calc(100% - 130px)',overflowY:'scroll',width:'100%',padding:'30px'}} >
     <Messages />
-
+     <ToastContainer/>
       </span>
         <InputWrapper>        
-            <Input type='text' placeholder='Type a message' onChange={handleChange} value={newMessage} />
+            <Input type='text' placeholder='Type a message' onChange={(event)=>{dispatch({type:'ADD_MESSAGE',payload:event.target.value})}} value={newMessage} />
             <ChatIcons>
-                 <Input type="file"  style={{ display: "none" }}  id="file"  />
+                 <Input type="file"  style={{ display: "none" }}  id="file"  onChange={(event)=>{dispatch({type:'ADD_IMAGE',payload:event.target.value})}}/>
                  <Label htmlFor='file'>
                       <AttachFileOutlinedIcon fontSize='large'/>
                  </Label>
