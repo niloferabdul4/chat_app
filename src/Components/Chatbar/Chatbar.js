@@ -7,52 +7,33 @@ import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 import AttachFileOutlinedIcon from '@mui/icons-material/AttachFileOutlined';
 import SentimentSatisfiedOutlinedIcon from '@mui/icons-material/SentimentSatisfiedOutlined';
 import { AppContext } from '../../Context/AppContextProvider';
-import { Timestamp, addDoc, collection, doc, orderBy, serverTimestamp, setDoc, updateDoc } from '@firebase/firestore';
-import { db, storage } from '../../firebase';
+import { Timestamp,collection,addDoc } from '@firebase/firestore';
+import { storage,db} from '../../firebase';
 import { Label } from '../../Pages/Register/style';
 import { Image } from '../Users/style';
 import { LeftWrapper, RightWrapper } from '../Navbar/style';
 import { ref,getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import { ToastContainer,toast } from 'react-toastify';
-import { updateProfile } from 'firebase/auth';
 
 
 const Chatbar = () => {
   const {state:{newMessage,loggedUser,selectedContact,newImage},dispatch}=useContext(AppContext)  
-     
 
- const handleFile=(event)=>{
-  
-    dispatch({type:'ADD_IMAGE' ,payload:event.target.files[0]})
-
- }
- 
 
   const sendMessage=async(event)=>
   {
-     event.preventDefault()
+    event.preventDefault()
      const user1=loggedUser.uid;
      console.log(loggedUser.uid)
      const user2=selectedContact.data.uid
      const combinedId= user1 > user2 ? `${user1+user2}` : `${user2+user1}`
-   const chatsRef=collection(db,'chats',combinedId,'messages')
+   const chatsRef= collection(db,'chats',combinedId,'messages')
  
     /*******   Add Image   ************/
-    let url;
-    if(newImage==='')    
-    {
-      await addDoc(chatsRef,{
-        displayName:loggedUser.displayName,
-        message:newMessage,
-        senderId:user1,
-        receiverId:user2,
-        timestamp:Timestamp.now()
-      
-      })
-    }
-    else
-    {
+    let url;  
 
+if(newImage)
+{
       const storageRef=ref(storage,`images/${newImage}`)           // create a reference to image      
       const uploadTask=uploadBytesResumable(storageRef,newImage)
       uploadTask.on(
@@ -60,41 +41,47 @@ const Chatbar = () => {
          toast.error(error.message)
          },
          ()=>{
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl)=>{
-             url=downloadUrl;
-             dispatch({type:'ADD_IMAGE',payload:downloadUrl})
-            addDoc(chatsRef,{   
-              message:newMessage,
-              senderId:user1,
-              receiverId:user2,
-              media:url,
-              timestamp:Timestamp.now()
-            
-            })
-            
-          }
-          )
-         }        
+              getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl)=>{
+                url=downloadUrl;
+                //dispatch({type:'ADD_IMAGE',payload:downloadUrl})
+                addDoc(chatsRef,{   
+                  message:newMessage,
+                  senderId:user1,
+                  receiverId:user2,
+                  media:url,
+                  timestamp:Timestamp.now()
+                
+                })
+                
+              }
+              )
+             // dispatch({type:'ADD_IMAGE',payload:null})
+              
+             }        
       )
-        dispatch({type:'ADD_IMAGE',payload:''})
-    }
+ }
+else{
+  await addDoc(chatsRef,{
+    displayName:loggedUser.displayName,
+    newMessage,
+    senderId:user1,
+    receiverId:user2,
+    timestamp:Timestamp.now()
+  
+  })
+ // dispatch({type:'ADD_INPUT',payload:''})
+}    
     
-    
-    /******  If no input entered ******* */
-
-    if (newMessage.trim()==='' && !newImage)
+    if(newMessage==='')
     {
+    /******  If no input and image  entered ******* */
       alert('Please enter a valid message')
       return;
-    }
-
-    
-    dispatch({type:'ADD_MESSAGE',payload:''})
-  
     
   }
+}
 
- 
+
 
  
      
@@ -121,9 +108,20 @@ const Chatbar = () => {
      <ToastContainer/>
       </span>
         <InputWrapper>        
-            <Input type='text' placeholder='Type a message' onChange={(event)=>{dispatch({type:'ADD_MESSAGE',payload:event.target.value})}} value={newMessage} />
+            <Input type='text'  required
+            placeholder='Type a message'
+             value={newMessage}
+             name='newMessage'
+             onChange={(event)=>{ dispatch({type:'ADD_INPUT',payload:event.target.value})}}
+               />
             <ChatIcons>
-                 <Input type="file"  style={{ display: "none" }}  id="file"  onChange={handleFile}/>
+                 <Input type="file"  
+                 style={{ display: "none" }}  
+                 id="file" 
+                  onChange={(event)=>{ 
+                                      const image=event.target.files[0];
+                                      dispatch({type:'ADD_IMAGE',payload:image})
+                                     }}/>
                  <Label htmlFor='file'>
                       <AttachFileOutlinedIcon fontSize='large'/>
                  </Label>

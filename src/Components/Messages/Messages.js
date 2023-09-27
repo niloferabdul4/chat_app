@@ -6,7 +6,7 @@ import Moment from 'react-moment'
 const Messages = () => {
 
 const {state:{loggedUser,selectedContact,chats}}=useContext(AppContext)
-console.log(chats)
+
 //console.log(loggedUser.displayName,loggedUser.uid)
   return (
     <>

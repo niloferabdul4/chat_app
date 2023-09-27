@@ -7,12 +7,12 @@ const reducer=(state,action)=>{
         case 'LOAD_USERS':
              return {...state,usersList:action.payload}
 
-        case 'ADD_MESSAGE':
+        case 'ADD_INPUT':
              return {...state,newMessage:action.payload}
 
         case 'ADD_IMAGE':
                return {...state,newImage:action.payload}
-  
+
         case 'SEARCH_TEXT':
              return {...state,searchText:action.payload}
 
@@ -22,8 +22,8 @@ const reducer=(state,action)=>{
         case 'SELECTED_CONTACT':
              return {...state,selectedContact:action.payload}
 
-        case 'default':
-          return {...state}
+         default:
+          return state;
     }
 }
 export default reducer;

@@ -5,15 +5,19 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import AppContextProvider from './Context/AppContextProvider';
+import { StyleSheetManager } from 'styled-components';
+import isPropValid from '@emotion/is-prop-valid';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   <React.StrictMode>
+  <StyleSheetManager shouldForwardProp={isPropValid} disableVendorPrefixes={false}>
     <BrowserRouter>
     <AppContextProvider>
       <App/>
     </AppContextProvider>
     </BrowserRouter>
+  </StyleSheetManager>
   </React.StrictMode>
 );
 

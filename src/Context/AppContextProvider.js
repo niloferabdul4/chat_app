@@ -7,8 +7,6 @@ import reducer from './reducer'
 export const AppContext=createContext()
 
 const AppContextProvider = ({children}) => { 
-
-
  useEffect(()=>{
   const unSub=onAuthStateChanged(auth,(authUser)=>{   
     dispatch({type:'SET_LOGGED_USER',payload:authUser})     
@@ -22,7 +20,7 @@ const initialState={
   chats:[],
   usersList:[],
   newMessage:'',
-  newImage:'',
+  newImage:null,
   loggedUser:{},
   searchText:'',
   selectedContact:'',
