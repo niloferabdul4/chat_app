@@ -28,7 +28,7 @@ console.log(chats)
                 </p>
                 <small>
                   
-                  <Moment fromNow>{user.data.timestamp}</Moment>
+                  <small>{user.data.timestamp.toDate().toString()}</small>
                 </small>
               </span>
           </MessageContent>        

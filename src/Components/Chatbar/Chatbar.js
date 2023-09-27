@@ -26,6 +26,7 @@ const Chatbar = () => {
     dispatch({type:'ADD_IMAGE' ,payload:event.target.files[0]})
 
  }
+ 
 
   const sendMessage=async(event)=>
   {
@@ -45,7 +46,7 @@ const Chatbar = () => {
         message:newMessage,
         senderId:user1,
         receiverId:user2,
-        timestamp:Timestamp.fromDate(new Date())
+        timestamp:Timestamp.now()
       
       })
     }
@@ -67,7 +68,7 @@ const Chatbar = () => {
               senderId:user1,
               receiverId:user2,
               media:url,
-              timestamp:Timestamp.fromDate(new Date())  ,  
+              timestamp:Timestamp.now()
             
             })
             

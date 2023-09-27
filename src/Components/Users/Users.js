@@ -8,7 +8,7 @@ import { db } from '../../firebase'
 const Users = () => {
   
   const {state:{usersList,loggedUser,selectedContact},dispatch}=useContext(AppContext)
- console.log(loggedUser)
+ //console.log(loggedUser)
  
   useEffect(()=>{
 

@@ -69,6 +69,16 @@ const ChatIcons=styled.div`
  align-items: center;
 
 `
+const Emoji=styled.div`
+            position: relative;
+            padding: 0px 100px 50px 100px;
+            width: 100%;
+            top: 20px;
+            left: 100px;
+            
+        
+
+`
 
 const Button=styled.button`
   border:none;
@@ -81,4 +91,4 @@ const Button=styled.button`
   cursor: pointer;
 
 `
-export {ChatContainer,ChatNavContainer,Wrapper,InputWrapper,Input,ChatIcons,Button}
+export {ChatContainer,ChatNavContainer,Wrapper,InputWrapper,Input,ChatIcons,Emoji,Button}
