@@ -116,12 +116,12 @@ else{
                />
             <ChatIcons>
                  <Input type="file"  
-                 style={{ display: "none" }}  
-                 id="file" 
-                  onChange={(event)=>{ 
-                                      const image=event.target.files[0];
-                                      dispatch({type:'ADD_IMAGE',payload:image})
-                                     }}/>
+                        style={{ display: "none" }}  
+                        id="file" 
+                          onChange={(event)=>{ 
+                                              const image=event.target.files[0];
+                                              dispatch({type:'ADD_IMAGE',payload:image})
+                                            }}/>
                  <Label htmlFor='file'>
                       <AttachFileOutlinedIcon fontSize='large'/>
                  </Label>
