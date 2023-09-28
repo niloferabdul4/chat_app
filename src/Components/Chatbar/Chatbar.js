@@ -118,7 +118,7 @@ else{
                  <Input type="file"  
                         style={{ display: "none" }}  
                         id="file" 
-                          onChange={(event)=>{ 
+                        onChange={(event)=>{ 
                                               const image=event.target.files[0];
                                               dispatch({type:'ADD_IMAGE',payload:image})
                                             }}/>
