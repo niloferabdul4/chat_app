@@ -3,6 +3,7 @@ import { initializeApp } from "firebase/app";
 import {getAuth} from 'firebase/auth'
 import { getFirestore } from "@firebase/firestore";
 import {getStorage} from 'firebase/storage'
+
 const firebaseConfig = {
   apiKey: "AIzaSyAml7xz2cYAfUKq6PXU5ZDrtVUaNOyKDVs",
   authDomain: "chatapp-89f88.firebaseapp.com",

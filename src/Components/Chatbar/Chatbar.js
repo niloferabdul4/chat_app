@@ -20,20 +20,19 @@ const Chatbar = () => {
   const {state:{newMessage,loggedUser,selectedContact,newImage},dispatch}=useContext(AppContext)  
 
 
-  const sendMessage=async(event)=>
+  const sendMessage=async()=>
   {
-    event.preventDefault()
      const user1=loggedUser.uid;
-     console.log(loggedUser.uid)
+     // console.log(loggedUser.uid)
      const user2=selectedContact.data.uid
      const combinedId= user1 > user2 ? `${user1+user2}` : `${user2+user1}`
-   const chatsRef= collection(db,'chats',combinedId,'messages')
+     const chatsRef= collection(db,'chats',combinedId,'messages')
  
     /*******   Add Image   ************/
-    let url;  
 
-if(newImage)
-{
+    let url;   
+    if(newImage)
+   {
       const storageRef=ref(storage,`images/${newImage}`)           // create a reference to image      
       const uploadTask=uploadBytesResumable(storageRef,newImage)
       uploadTask.on(
@@ -45,29 +44,27 @@ if(newImage)
                 url=downloadUrl;
                 //dispatch({type:'ADD_IMAGE',payload:downloadUrl})
                 addDoc(chatsRef,{   
-                  message:newMessage,
-                  senderId:user1,
-                  receiverId:user2,
-                  media:url,
-                  timestamp:Timestamp.now()
-                
+                                  message:newMessage,
+                                  senderId:user1,
+                                  receiverId:user2,
+                                  media:url,
+                                  timestamp:Timestamp.now()                
                 })
                 
               }
               )
-             // dispatch({type:'ADD_IMAGE',payload:null})
-              
+             // dispatch({type:'ADD_IMAGE',payload:null})              
              }        
       )
- }
-else{
-  await addDoc(chatsRef,{
-    displayName:loggedUser.displayName,
-    newMessage,
-    senderId:user1,
-    receiverId:user2,
-    timestamp:Timestamp.now()
-  
+   }
+   else{
+    await addDoc(chatsRef,{
+                displayName:loggedUser.displayName,
+                message:newMessage,
+                senderId:user1,
+                receiverId:user2,
+                timestamp:Timestamp.now()
+              
   })
  // dispatch({type:'ADD_INPUT',payload:''})
 }    
@@ -103,10 +100,9 @@ else{
      <ToastContainer/>
       </span>
         <InputWrapper>        
-            <Input type='text'  required
+            <Input type='text' 
             placeholder='Type a message'
              value={newMessage}
-             name='newMessage'
              onChange={(event)=>{ dispatch({type:'ADD_INPUT',payload:event.target.value})}}
                />
             <ChatIcons>
