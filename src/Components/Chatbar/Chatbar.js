@@ -81,10 +81,7 @@ else{
   }
 }
 
-
-
- 
-     
+   
   return (
     <>
       <ChatContainer>
@@ -93,14 +90,12 @@ else{
              {selectedContact!=='' &&  <LeftWrapper>
                   <Image src={selectedContact.data.photoURL} alt=''/>
                   <p style={{fontFamily:'sans-serif',fontWeight:'bold',fontSize:'20px',padding:'10px 0px'}}>{selectedContact.data.displayName}</p>
-              </LeftWrapper>
-}
+              </LeftWrapper>}
               <RightWrapper>
                   <VideoCameraBackOutlinedIcon fontSize='large' />
                   <PersonAddAlt1OutlinedIcon fontSize='large'  />
                   <MoreHorizOutlinedIcon fontSize='large' />
-              </RightWrapper>
-                
+              </RightWrapper>                
             </Wrapper>           
       </ChatNavContainer>
       <span style={{display:'flex', height:'calc(100% - 130px)',overflowY:'scroll',width:'100%',padding:'30px'}} >
