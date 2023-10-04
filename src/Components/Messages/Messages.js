@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import  {MessageContent,MessagesContainer,Container}  from './style'
 import { AppContext } from '../../Context/AppContextProvider'
-import Moment from 'react-moment'
+
 
 const Messages = () => {
 
@@ -28,7 +28,7 @@ const {state:{loggedUser,selectedContact,chats}}=useContext(AppContext)
                 </p>
                 <small>
                   
-                  <small>{user.data.timestamp.toDate().toString()}</small>
+                  <small>{user.data.timestamp.toDate().toLocaleString()}</small>
                 </small>
               </span>
           </MessageContent>        

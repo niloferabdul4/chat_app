@@ -6,7 +6,7 @@ const Container=styled.div`
   justify-content: flex-start;
   width:100%;
   height:calc(100%-150px);
-         
+
 
 `
 

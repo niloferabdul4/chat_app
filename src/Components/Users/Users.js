@@ -1,13 +1,13 @@
 import React, { useContext,useEffect, useState } from 'react'
 import { UsersContainer,Wrapper,UserName,Image} from './style'
 import { AppContext } from '../../Context/AppContextProvider'
-import { onSnapshot,collection, addDoc,query,orderBy,where, doc } from '@firebase/firestore'
+import { onSnapshot,collection, addDoc,query,orderBy,where, doc, limit } from '@firebase/firestore'
 import { db } from '../../firebase'
 
 
 const Users = () => {
   
-  const {state:{usersList,loggedUser,selectedContact},dispatch}=useContext(AppContext)
+  const {state:{usersList,loggedUser,selectedContact,user},dispatch}=useContext(AppContext)
  //console.log(loggedUser)
  
   useEffect(()=>{
@@ -26,7 +26,7 @@ const Users = () => {
 
       return ()=>unSub()
   },[])
-
+  
   const selectUser=(user)=>{
     
     dispatch({type:'SELECTED_CONTACT',payload:user})        
@@ -35,11 +35,12 @@ const Users = () => {
                            // selectedProfile
      const combinedId= user1 > user2 ? `${user1+user2}` : `${user2+user1}`      // combine both
 
-      onSnapshot(collection(db,'chats',combinedId,'messages'),orderBy('timestamp','asc'),snapshot=>{
+      onSnapshot(collection(db,'chats',combinedId,'messages'),orderBy('timestamp','asc'), snapshot=>{
         const res=snapshot.docs.map(doc=>({id:doc.id,data:doc.data()}))
         dispatch({type:'LOAD_CHATS',payload:res})
-       // console.log(res)
-  })    
+      // console.log(res)
+  })  
+
 
   }
 
@@ -55,8 +56,7 @@ const Users = () => {
                  <UserName>{user.data.displayName}</UserName>  
              </span>  
          </Wrapper>
-       
-
+      
     </>
     
     })}
