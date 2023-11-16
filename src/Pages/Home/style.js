@@ -9,7 +9,7 @@ const HomeContainer=styled.div`
 
 `
 const Box=styled.div`
-    width:75%;
+    width:90%;
     height:90%;
     border-radius: 10px;
     overflow: hidden;

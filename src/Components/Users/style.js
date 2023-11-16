@@ -10,21 +10,15 @@ const UsersContainer=styled.div`
     height: calc(100% - 80px);
         position: sticky;
         top: 80px;
-    overflow-y: scroll;
-       
+      // overflow-y: scroll;
+
     
             
         ::-webkit-scrollbar{
-        width: 0.5px;
+        width: 0px;
         }
 
-        ::-webkit-scrollbar-track{
-        background-color: #FAFAFA;
-        }
-
-        ::-webkit-scrollbar-thumb{
-        background-color: #FAFAFA;
-        }
+       
 `
 
 

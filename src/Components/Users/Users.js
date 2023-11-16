@@ -35,7 +35,7 @@ const Users = () => {
                            // selectedProfile
      const combinedId= user1 > user2 ? `${user1+user2}` : `${user2+user1}`      // combine both
 
-      onSnapshot(collection(db,'chats',combinedId,'messages'),orderBy('timestamp','asc'), snapshot=>{
+      onSnapshot(collection(db,'chats',combinedId,'messages'),orderBy('timestamp','asc'),snapshot=>{
         const res=snapshot.docs.map(doc=>({id:doc.id,data:doc.data()}))
         dispatch({type:'LOAD_CHATS',payload:res})
       // console.log(res)

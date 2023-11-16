@@ -18,7 +18,7 @@ const Login = () => {
     await signInWithEmailAndPassword(auth,email,password)
     .then((authUser)=>{    
       dispatch({type:'SET_LOGGED_USER',payload:authUser.user})
-      console.log(authUser.user)
+      //console.log(authUser.user)
       navigate('/')
   
     })

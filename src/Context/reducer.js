@@ -7,12 +7,15 @@ const reducer=(state,action)=>{
         case 'LOAD_USERS':
              return {...state,usersList:action.payload}
 
-        case 'ADD_INPUT':
-             return {...state,newMessage:action.payload}
+        case 'ADD_TEXT':
+             return {...state,text:action.payload}
 
         case 'ADD_IMAGE':
                return {...state,newImage:action.payload}
 
+        case 'ADD_IMAGEURL':
+                    return {...state,newImageUrl:action.payload}
+     
         case 'SEARCH_TEXT':
              return {...state,searchText:action.payload}
 

@@ -26,8 +26,9 @@ return ()=>{
 const initialState={
   chats:[],
   usersList:[],
-  newMessage:'',
-  newImage:null,
+  text:'',
+  newImage:'',
+  newImageUrl:'',
   loggedUser:null,
   searchText:'',
   selectedContact:'',

@@ -4,7 +4,7 @@ import { styled } from "styled-components";
 const ChatContainer=styled.div`
   flex:2;
   width:100%;
- // border:1px solid grey;
+  height:100%;
   background-color:#ECFFDC; 
   display: flex;
   flex-direction:column;
@@ -40,7 +40,7 @@ gap:15px;
 width:100%;
 `
 
-const InputWrapper=styled.div`
+const Form=styled.form`
   
   height:60px;
   width:100%;
@@ -57,10 +57,13 @@ flex:0.9;
 padding:20px;
 border:none;
 outline:none;
-
  font-size: 1.1rem;
 `
 
+const ImageInput=styled.input`
+display: none;
+
+`
 const ChatIcons=styled.div`
  flex:0.1;
  gap:15px;
@@ -80,7 +83,7 @@ const Emoji=styled.div`
 
 `
 
-const Button=styled.button`
+const SendButton=styled.button`
   border:none;
   font-size:1.1rem;
   background-color:#3e3c51 ;
@@ -91,4 +94,4 @@ const Button=styled.button`
   cursor: pointer;
 
 `
-export {ChatContainer,ChatNavContainer,Wrapper,InputWrapper,Input,ChatIcons,Emoji,Button}
+export {ChatContainer,ChatNavContainer,Wrapper,Form,Input,ChatIcons,Emoji,SendButton,ImageInput}

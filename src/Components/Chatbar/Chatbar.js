@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Messages from '../Messages/Messages'
-import { ChatContainer,ChatNavContainer,Wrapper,Input, InputWrapper,ChatIcons,Button} from './style'
+import { ChatContainer,ChatNavContainer,Wrapper,Input, Form,ChatIcons,SendButton} from './style'
 import VideoCameraBackOutlinedIcon from '@mui/icons-material/VideoCameraBackOutlined';
 import PersonAddAlt1OutlinedIcon from '@mui/icons-material/PersonAddAlt1Outlined';
 import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
@@ -15,82 +15,62 @@ import { LeftWrapper, RightWrapper } from '../Navbar/style';
 import { ref,getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import { ToastContainer,toast } from 'react-toastify';
 import { useRef } from 'react';
+import { IconButton } from '@mui/material';
 
 
 const Chatbar = () => {
-  const {state:{newMessage,loggedUser,selectedContact,newImage},dispatch}=useContext(AppContext)  
-  const inputRef = useRef();
+  const {state:{text,loggedUser,selectedContact,newImage,newImageUrl},dispatch}=useContext(AppContext)  
 
-  useEffect(() => {
-    selectedContact!=='' && 
-    inputRef.current.focus();
-  }, []);
+  const uploadFile=()=>{
+    document.getElementById('file').click();         // click the file with id 'imageFile' ie) input choose file
 
+}
+ 
 
-
-  const sendMessage=async()=>
+  const sendMessage=async(event)=>
 {
-  if(!newMessage && !newImage)
-  {
-    return;                                       // dont send messagres
   
-  }
-  try{
-     const user1=loggedUser.uid;
-     // console.log(loggedUser.uid)
-     const user2=selectedContact.data.uid
-     const combinedId= user1 > user2 ? `${user1+user2}` : `${user2+user1}`
-     const chatsRef= collection(db,'chats',combinedId,'messages')
- 
-    /*******   Add Image   ************/
-    if(newImage)
-     {
-     
-      const storageRef=ref(storage,`images/${newImage.name}`)           // create a reference to image   
-      //console.log(storageRef)   
-      const uploadTask=uploadBytesResumable(storageRef,newImage)
-      uploadTask.on('state_changed',
-         error=>{
-         toast.error(error.message)
-         },
-         ()=>{
-              getDownloadURL(uploadTask.snapshot.ref).then(async (downloadUrl)=>{
-                dispatch({type:'ADD_IMAGE',payload:downloadUrl})
-               console.log(downloadUrl)
-              
-                await addDoc(chatsRef,{   
-                                  message:newMessage,
-                                  senderId:user1,
-                                  receiverId:user2,
-                                  media:downloadUrl,
-                                  timestamp:Timestamp.now()                
-                            });
-                
-              });
-              
-                      
-             }        
-      )
-   }
-   else
-   {
-    await addDoc(chatsRef,{
-                displayName:loggedUser.displayName,
-                message:newMessage,
-                senderId:user1,
-                receiverId:user2,
-                timestamp:Timestamp.now()             
-                });
- 
-  }    
-    
-  dispatch({type:'ADD_INPUT',payload:''})
-  //dispatch({type:'ADD_IMAGE',payload:null})    
-  }
-  catch (error)
+  event.preventDefault()
+  const user1=loggedUser.uid;
+  const user2=selectedContact.data.uid
+ console.log(user1)
+ console.log(user2)
+  const combinedId= user1 > user2 ? (`${user1+user2}`) : (`${user2+user1}`)
+  console.log(combinedId)
+
+
+ /*******   Add Image   ************/
+
+   if(newImage)
   {
-    toast.error('Error sending message')
-  }
+       
+       const storageRef=ref(storage,`/images/${newImage.name}`)         // create a reference to image    
+       const uploadImage=uploadBytesResumable(storageRef,newImage)
+       uploadImage.on('state_changed',(snapshot)=>{},
+                         (error)=>console.log(error.message),
+                         ()=>{
+                             getDownloadURL(uploadImage.snapshot.ref)
+                             .then((url)=>dispatch({type:'ADD_IMAGEURL',payload:url}))
+                             .catch((error)=>console.log(error.message))
+                         }
+                       )
+      
+        
+               
+      }
+     
+      await addDoc(collection(db,'chats',combinedId,'messages'),{  
+        displayName:loggedUser.displayName, 
+        text:text,
+        senderId:user1,
+        receiverId:user2,
+        media:newImageUrl || '',
+        timestamp:Timestamp.now()               
+  });
+
+   
+      
+
 }
 
   
@@ -123,32 +103,30 @@ const Chatbar = () => {
       { selectedContact!=='' && 
        
        ( 
-   <InputWrapper>        
+   <Form onSubmit={sendMessage}>        
             <Input type='text' 
                   placeholder='Type a message'
-                  value={newMessage}
-                  ref={inputRef}
+                  value={text}
                   onChange={(event)=>{ dispatch({type:'ADD_INPUT', payload:event.target.value})}}
                />
             <ChatIcons>
                  <Input type="file"  
                         style={{ display: "none" }}  
+                        accept='image/*'
                         id="file" 
                         onChange={(event)=>{   
                                               const image=event.target.files[0];
                                               dispatch({type:'ADD_IMAGE',payload:image})
                                             }}/>
-                 <Label htmlFor='file'>
-                      <AttachFileOutlinedIcon fontSize='large'  src={newImage}/>
-                     
-                 </Label>
+                <IconButton onClick={uploadFile}>
+                      <AttachFileOutlinedIcon fontSize='large'/>                     
+                 </IconButton>
                  <SentimentSatisfiedOutlinedIcon fontSize='large' />
-                 <Button onClick={sendMessage}>Send</Button>
+                 <SendButton type='submit' >Send</SendButton>
             </ChatIcons>
-        </InputWrapper>   
+        </Form>   
        )}
       </ChatContainer>
   </>
   )}
 export default Chatbar;
-
