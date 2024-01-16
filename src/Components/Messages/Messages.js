@@ -1,47 +1,56 @@
-import React, { useContext} from 'react'
-import  {MessageContent,MessagesContainer,Container}  from './style'
+import React, { useContext, useRef, useEffect } from 'react'
+import { SenderMessageContent, ReceiverMessageContent, MessageContent,MessagesContainer, Container, Image, Wrapper } from './style'
 import { AppContext } from '../../Context/AppContextProvider'
+import moment from 'moment'
+import { LinearProgress } from '@mui/material'
+const Messages = ({ chat, index }) => {
+  const { state: { loggedUser, selectedContact, chats,isLoading } } = useContext(AppContext)
+  const scrollRef = useRef(null)
 
-
-const Messages = () => {
-
-const {state:{loggedUser,selectedContact,chats}}=useContext(AppContext)
-
-//console.log(loggedUser.displayName,loggedUser.uid)
-  return (
-    <>
-      <Container>     
-        <MessagesContainer> 
-          {selectedContact ==='' ? 
-       ( <p style={{fontSize:'24px'}}>Select a user to start a conversation</p> )
-          :
-       ( 
-       chats?.map(user=>{return <> 
-            
-          <MessageContent key={user.id} id={user.data.senderId===loggedUser.uid? ('owner') :''}>
-              
-              <span style={{display:'flex',flexDirection:'column',alignItems:'flex-start',gap:'10px'}}>
-                <b style={{color:'orangered',fontSize:'1.2rem'}}>{user.data.displayName}</b>
-                <p> {user.data.media? (<img src={user.data.media} alt=''/>) : ''}
-                     {user.data.message}
-                     
-                </p>
-                <small>
-                  
-                  <small>{user.data.timestamp.toDate().toLocaleString()}</small>
-                </small>
-              </span>
-          </MessageContent>        
-           </>})  
-   
-      )
+  useEffect(() => {
+    if (scrollRef.current && index === chats.length - 1) {
+      scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
     }
-         </MessagesContainer> 
-      
-      </Container>
-    </>
-     
-      
+
+  }, [chats, index])
+ 
+ 
+  /*******  convert time format  ********8*/
+  const date = new Date((chat.data.timestamp)* 1000);
+
+// Format the date to a time string like "10:20 pm"
+const formattedTime = date.toLocaleTimeString('en-US', {
+  hour: 'numeric',
+  minute: '2-digit',
+  hour12: true,
+});
+
+  return (
+    <div>
+    <Container>
+        <MessagesContainer  id={chat.data.senderId === loggedUser.uid ? 'owner' : ''}>
+          <Wrapper  id={chat.data.senderId === loggedUser.uid ? 'owner' : ''}>
+          <span style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+              <Image
+                src={
+                  chat.data.senderId === loggedUser.uid
+                    ? loggedUser.photoURL
+                    : selectedContact.photoURL
+                }
+                alt=""
+              />
+              <small>{formattedTime}</small>
+            </span>
+            <MessageContent id={chat.data.senderId === loggedUser.uid ? 'owner' : ''}>
+              <p>{chat.data.text}</p>
+              {chat.data.media &&  <img  src={chat.data.media} alt="" />}
+            </MessageContent>
+          </Wrapper>        
+        </MessagesContainer>
+        </Container>  
+        <div ref={scrollRef}></div>        
+    </div>
+
   )
 }
 

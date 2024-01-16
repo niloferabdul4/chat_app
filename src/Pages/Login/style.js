@@ -2,7 +2,6 @@ import { styled } from "styled-components";
 
 const Container=styled.div`
     height:100vh;
-    width:100vw;
     display :flex;
     align-items: center;
     justify-content: center;
@@ -20,16 +19,27 @@ const Container=styled.div`
     border:0.1px solid lightgrey;
     border-radius: 7px;  
     padding:30px;
-    width:25%;
+    width:35%;
     background-color:white;
-    
+    @media (min-width:320px)and (max-width: 600px) {
+    width:75%;
+    padding:20px;
+    }
+    @media (min-width:601px)and (max-width: 820px) {
+    width:50%;
+    }
     
 `
 
 
  const Title=styled.h2`
     font-weight: 400;
-
+    @media (min-width:320px)and (max-width: 600px) {
+     font-size: 20px;
+    }
+    @media (min-width:601px)and (max-width: 820px) {
+   font-size: 25px;
+    }
 `
 
  const Form =styled.form`
@@ -45,7 +55,12 @@ const Container=styled.div`
     justify-content: center;
     align-items:flex-start;
     flex-direction: column;   
-    
+    @media (min-width:320px)and (max-width: 600px) {
+    padding:8px;
+    }
+    @media (min-width:320px)and (max-width: 600px) {
+    padding:10px;
+    }
     
 
 `
@@ -53,14 +68,24 @@ const Container=styled.div`
     font-weight: 400;
     font-size: 18px;
     margin: 10px 0px;
-    text-align: left;  
-    
+    text-align: left; 
+     
+    @media (min-width:320px)and (max-width: 600px) {
+    font-size: 16px;
+    margin-bottom: 8px;
+    }
+    @media (min-width:601px)and (max-width: 820px) {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
 
 `
 
  const Input=styled.input`   
     width:100%;   
     padding: 10px;
+
+
  
 `
 
@@ -75,7 +100,14 @@ const Container=styled.div`
     padding: 6px;
     cursor: pointer;
     border:none;
-  
+    @media (min-width:320px)and (max-width: 600px) {
+    height:35px;
+    font-size: 0.98rem;
+    }
+    @media (min-width:601px)and (max-width: 820px) {
+        height:40px;
+        font-size: 1rem;
+    }
 
 `
  const Span=styled.span`
@@ -84,7 +116,13 @@ const Container=styled.div`
     align-items: center;
     width:100%;
     margin:10px 20px;
-
+    @media (min-width:320px)and (max-width: 600px) {
+     margin:4px;
+     font-size: 14px;
+    }
+    @media (min-width:601px)and (max-width: 820px) {
+       margin:10px;
+    }
 `
 
  const ErrorLabel=styled.label`

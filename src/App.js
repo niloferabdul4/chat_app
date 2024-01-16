@@ -10,29 +10,27 @@ import Register from './Pages/Register/Register';
 
 function App() {
   const {state:{loggedUser}}=useContext(AppContext)  
-  
-  const ProtectedRoute=({children})=>{
-    if(!loggedUser)
-    {
-      return <Navigate to='/login'/>
-    }
-    else{
-    return children;
-    }
-  }
+  // const ProtectedRoute=({children})=>{
+  //   if(!loggedUser)
+  //   {
+  //     return <Navigate to='/login'/>
+  //   }
+  //   else{
+  //   return children;
+  //   }
+  // }
   
   return (
     <div className="App">      
      <Routes>
-      <Route path='/'>
-           <Route index element={<ProtectedRoute>
+      <Route path='/' element={loggedUser?<Home/>:<Login/>}/>
+           {/* <Route index element={<ProtectedRoute>
                                     <Home/>
                                 </ProtectedRoute>
                                 }/>
-      
+       */}
           <Route path='login' element={<Login/>}/>
           <Route path='register' element={<Register/>} />
-      </Route>
      </Routes>
 
  

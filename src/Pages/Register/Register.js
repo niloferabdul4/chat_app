@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { RegisterContainer,Wrapper,Title,Form,InputWrapper,FileWrapper,Label,Input,Button,SignIn,UploadLabel} from './style';
 import AddAPhotoOutlinedIcon from '@mui/icons-material/AddAPhotoOutlined';
 import { ToastContainer, toast } from 'react-toastify';
@@ -15,31 +15,32 @@ import { AppContext } from '../../Context/AppContextProvider';
 const Register = () => {
 
   const navigate=useNavigate()
+  const [name,setName]=useState('')
+  const [email,setEmail]=useState('')
+  const [password,setPassword]=useState('')
+  const [file,setFile]=useState('')
 
 /**********    HandleSubmit Function   *********/
 
     const handleSubmit=async(event)=>
     {
         event.preventDefault();
-        const displayName=event.target[0].value;
-        const email=event.target[1].value;
-        const password=event.target[2].value
-        const file=event.target[3].files[0]
+       console.log(name,email,password,file.name)
+
         try
         {
           const res=await createUserWithEmailAndPassword(auth,email,password)    
-
+          
           //create a unique image name    
-          const storageRef=ref(storage,displayName)
+          const storageRef=ref(storage,name)
    
          //Upload file to the object 'images/mountains.jpg'   
-           uploadBytesResumable(storageRef, file).then(()=>
-              
+           uploadBytesResumable(storageRef, file).then(()=>              
                  {
                                                                                             // Handle successful uploads on complete    
                    getDownloadURL(storageRef).then(async(downloadURL) => {
                            await updateProfile(res.user,{                      //  update user profile 
-                                 displayName:displayName,
+                                 displayName:name,
                                  photoURL:downloadURL
                              })                    
 
@@ -48,7 +49,7 @@ const Register = () => {
 
                              setDoc(doc(db,'users',res.user.uid),{              
                               uid:res.user.uid,
-                              displayName:displayName,
+                              displayName:name,
                               email:email,
                               photoURL:downloadURL,
                               
@@ -83,21 +84,21 @@ const Register = () => {
               <Form onSubmit={handleSubmit}>
                         <InputWrapper>
                                <Label htmlFor='name'>Name</Label>
-                               <Input type='text' id='name' placeholder='Name' />
+                               <Input type='text' id='name' placeholder='Name' onChange={(e)=>setName(e.target.value)} />
                           <ToastContainer/>      
                        </InputWrapper>
                        <InputWrapper>
                                <Label htmlFor='email'>Email</Label>
-                               <Input type='email'  id='email' placeholder='Email'  />                                                                                            
+                               <Input type='email'  id='email' placeholder='Email'  onChange={(e)=>setEmail(e.target.value)} />                                                                                            
                           <ToastContainer/>      
                        </InputWrapper>
                        <InputWrapper>
                                <Label htmlFor='pwd'>Password</Label>
-                               <Input type='password'  id='pwd' placeholder='Password'  />                                                                                   
+                               <Input type='password'  id='pwd' placeholder='Password' onChange={(e)=>setPassword(e.target.value)} />                                                                                   
                            <ToastContainer/>   
                        </InputWrapper>
                        <FileWrapper>                              
-                               <Input  type='file'  id='file'   style={{display:'none'}}   />
+                               <Input  type='file'  id='file'   style={{display:'none'}} onChange={(e)=>setFile(e.target.files[0])}  />
                                <UploadLabel htmlFor='file'>                             
                                  <AddAPhotoOutlinedIcon  style={{color:'grey',cursor:'pointer'}}/>
                                  <span>Add an avatar</span>

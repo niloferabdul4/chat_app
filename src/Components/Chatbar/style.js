@@ -1,21 +1,35 @@
 import { styled } from "styled-components";
 
 
-const ChatContainer=styled.div`
+const ChatContainer = styled.div`
   flex:2;
+  flex-grow:1;
   width:100%;
   height:100%;
-  background-color:#ECFFDC; 
+  background-color:	#dcf8c6; 
   display: flex;
   flex-direction:column;
   align-items:flex-start;
   justify-content: space-between;
+  position:relative;
+  padding: 0px;
 
+  @media (min-width:368px)and (max-width: 600px) {
+
+   order:2;
+  }
+  @media (min-width:601px)and (max-width: 820px) {
+   flex:1.44;
+  }
 
 `
 
+const IntroImage=styled.img`
+width:100%;
+margin-bottom: 20px;
 
-const ChatNavContainer=styled.div`
+`
+const ChatNavContainer = styled.div`
   height:80px;
   width:100%;
   background-color: #075E54;
@@ -26,10 +40,28 @@ const ChatNavContainer=styled.div`
         color: lightgray;
         position:sticky;
         border-left:2px solid grey;
+        @media (min-width:320px)and (max-width: 600px) {
+       height:60px;
+  }
+
 
 `
+const ChatMainContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex:1;
+  width:100%;
+  overflow-y:auto;
+  padding:40px 0px;
+   
+            
+  ::-webkit-scrollbar{
+        width: 5px;
+        
+        }
 
-const Wrapper=styled.div`
+`
+const Wrapper = styled.div`
 
 display: flex;
 flex-direction:row;
@@ -40,53 +72,90 @@ gap:15px;
 width:100%;
 `
 
-const Form=styled.form`
-  
+
+const ChatFooter = styled.div`
+
+    bottom:0;
+    left:0;
+    height:60px;
+      width:100%;
+      position:absolute;
+      background-color:lightgreen;
+    display:flex;
+    align-items:center;
+
+`
+
+const InputContainer = styled.div`
+width:100%;
+display: flex;
+align-items: center;
+
+
+`
+
+const InputWrapper = styled.form`
   height:60px;
   width:100%;
-  background-color:lightgreen;
+  background-color:golden;
   padding: 10px;
   display:flex;
   justify-content: space-between;
   gap:10px;
- 
+  @media (min-width:320px)and (max-width: 600px) {
+   padding: 10px 6px;
+  }
+
 
 `
-const Input=styled.input`
+const Input = styled.input`
 flex:0.9;
 padding:20px;
 border:none;
 outline:none;
- font-size: 1.1rem;
+ font-size: 1rem;
+ @media (min-width:320px)and (max-width: 600px) {
+   padding:4px;
+  }
+  @media  (min-width:601px) and (max-width:820px){
+
+padding: 6px;
+  }
 `
 
-const ImageInput=styled.input`
+const ImageInput = styled.input`
 display: none;
 
 `
-const ChatIcons=styled.div`
+const ChatIcons = styled.div`
  flex:0.1;
  gap:15px;
  display:flex;
  justify-content: flex-start;
  align-items: center;
+ @media (min-width:320px)and (max-width: 600px) {
+    gap:4px
+  }
+  @media  (min-width:601px) and (max-width:820px){
+    gap:10px;
+  }
 
 `
 const Emoji=styled.div`
-            position: relative;
-            padding: 0px 100px 50px 100px;
-            width: 100%;
-            top: 20px;
-            left: 100px;
-            
-        
+    position: relative;
+    padding: 0px 100px 50px 100px;
+    width: 100%;
+    top: 20px;
+    left: 100px;
+  
 
 `
 
-const SendButton=styled.button`
+
+const SendButton = styled.button`
   border:none;
   font-size:1.1rem;
-  background-color:#3e3c51 ;
+  background-color:	#075E54;
   padding: 8px;
   color:white;
   border-radius: 6px;
@@ -94,4 +163,4 @@ const SendButton=styled.button`
   cursor: pointer;
 
 `
-export {ChatContainer,ChatNavContainer,Wrapper,Form,Input,ChatIcons,Emoji,SendButton,ImageInput}
+export { ChatContainer, ChatNavContainer, ChatMainContainer,IntroImage, Wrapper, ChatFooter, InputContainer, InputWrapper, Input,ChatIcons, Emoji, SendButton, ImageInput }

@@ -3,9 +3,6 @@ import { onAuthStateChanged } from 'firebase/auth'
 import React,{createContext,useEffect,useReducer,useState} from 'react'
 import { auth } from '../firebase'
 import reducer from './reducer'
-import { db } from '../firebase'
-import { collection,query,where,onSnapshot } from '@firebase/firestore'
-
 export const AppContext=createContext()
 
 const AppContextProvider = ({children}) => { 
@@ -26,14 +23,13 @@ return ()=>{
 const initialState={
   chats:[],
   usersList:[],
-  text:'',
-  newImage:'',
-  newImageUrl:'',
   loggedUser:null,
   searchText:'',
-  selectedContact:'',
+  selectedContact:null,
   error:false,
-  selected:false
+  selected:false,
+  
+ 
 }
 const [state,dispatch]=useReducer(reducer,initialState)
 

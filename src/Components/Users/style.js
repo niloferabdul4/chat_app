@@ -10,13 +10,14 @@ const UsersContainer=styled.div`
     height: calc(100% - 80px);
         position: sticky;
         top: 80px;
-      // overflow-y: scroll;
+    overflow-y: auto;
 
-    
-            
-        ::-webkit-scrollbar{
-        width: 0px;
+             
+  ::-webkit-scrollbar{
+        width: 2px;
+        background-color: lightgreen;
         }
+
 
        
 `
@@ -30,16 +31,21 @@ const Wrapper=styled.div`
     cursor: pointer;
     gap:10px;
     padding:20px;
-    background: ${props=>props.id==='selected' ? 'whitesmoke' : 'transparent'};
+    background: ${props=>props.id==='selected' ? 'lightgrey' : 'transparent'};
         &:hover{
-    background-color:whitesmoke;
-
+              background-color:lightgrey;
     }
+  
+  @media (min-width:601px)and (max-width: 820px) {
+  padding: 10px;
+  }
+
+    
 `
 
 const UserName=styled.p`
-   font-size:1.3rem;
-   font-weight:500;
+   font-size:1.2rem;
+   
 `
 
 const Image=styled.img`

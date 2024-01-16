@@ -3,14 +3,14 @@ import styled from "styled-components";
 
  export const RegisterContainer=styled.div`    
     height:100vh;
-    width:100vw;
     display :flex;
     align-items: center;
     justify-content: center;
     margin-left: auto;
     margin-right: auto;
     margin:15px 0px;
-   
+    
+
 `
 
 
@@ -22,15 +22,26 @@ export const Wrapper=styled.div`
     border:0.1px solid lightgrey;
     border-radius: 7px;  
     padding:30px;
-    width:25%;
+    width:35%;
     background-color:white;
-   
+    @media (min-width:320px)and (max-width: 600px) {
+    width:75%;
+    padding:20px;
+    }
+    @media (min-width:601px)and (max-width: 820px) {
+    width:50%;
+    }
 `
 
 
 export const Title=styled.h2`
     font-weight: 600;
-  
+    @media (min-width:320px)and (max-width: 600px) {
+   font-size: 20px;
+    }
+    @media (min-width:601px)and (max-width: 820px) {
+    font-size:25px;
+    }
 `
 
 export const Form =styled.form`
@@ -44,8 +55,13 @@ export const InputWrapper=styled.div`
     display: flex;
     justify-content: center;
     align-items:flex-start;
-    flex-direction: column;
-   
+    flex-direction: column;   
+    @media (min-width:320px)and (max-width: 600px) {
+    padding:8px;
+    }
+    @media (min-width:320px)and (max-width: 600px) {
+    padding:10px;
+    }
     
 
 `
@@ -57,6 +73,12 @@ export const FileWrapper=styled.div`
     align-items:center;
     flex-direction: row;
     margin-top: 10px;;
+    @media (min-width:320px)and (max-width: 600px) {
+    width:80%;
+    }
+    @media (min-width:601px)and (max-width: 820px) {
+        width:80%;
+    }
     
 
 `
@@ -64,6 +86,14 @@ export const Label=styled.label`
     font-weight: 600;
     margin: 10px 0px;
     text-align: left;  
+    @media (min-width:320px)and (max-width: 600px) {
+    font-size: 16px;
+    margin-bottom: 8px;
+    }
+    @media (min-width:601px)and (max-width: 820px) {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
    
 `
 export const UploadLabel=styled.label`
@@ -96,13 +126,23 @@ export const Button=styled.button`
     cursor: pointer;
     border:none;
     background: linear-gradient(right bottom rgba(0,0,1,2));
-   
+    @media (min-width:320px)and (max-width: 600px) {
+    height:35px;
+    font-size: 0.98rem;
+    }
+    @media (min-width:601px)and (max-width: 820px) {
+        height:40px;
+        font-size: 1rem;
+    }
 
 `
 
 export const SignIn=styled.p`
     font-size:16px;
     margin:10px 0px;
-    
+    @media (min-width:320px)and (max-width: 600px) {
+   font-size: 14px;
+    }
+  
 
 `

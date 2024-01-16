@@ -6,15 +6,6 @@ const reducer=(state,action)=>{
 
         case 'LOAD_USERS':
              return {...state,usersList:action.payload}
-
-        case 'ADD_TEXT':
-             return {...state,text:action.payload}
-
-        case 'ADD_IMAGE':
-               return {...state,newImage:action.payload}
-
-        case 'ADD_IMAGEURL':
-                    return {...state,newImageUrl:action.payload}
      
         case 'SEARCH_TEXT':
              return {...state,searchText:action.payload}
@@ -24,7 +15,13 @@ const reducer=(state,action)=>{
 
         case 'SELECTED_CONTACT':
              return {...state,selectedContact:action.payload}
-
+             
+        case 'SELECTED_CONTACT':
+               return {...state,selectedContact:action.payload}
+  
+     //   case '_LAST_MESSAGE':
+     //           return {...state,lastMessage:action.payload}
+  
          default:
           return state;
     }
