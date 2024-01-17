@@ -1,12 +1,12 @@
 import React, { useContext, useRef, useEffect } from 'react'
 import { SenderMessageContent, ReceiverMessageContent, MessageContent, MessagesContainer, Container, Image, Wrapper } from './style'
 import { AppContext } from '../../Context/AppContextProvider'
-import moment from 'moment'
-import { LinearProgress } from '@mui/material'
 const Messages = ({ chat, index }) => {
-  const { state: { loggedUser, selectedContact, chats, isLoading } } = useContext(AppContext)
+  const { state: { loggedUser, selectedContact, chats} } = useContext(AppContext)
   const scrollRef = useRef(null)
 
+
+  console.log(index)
   useEffect(() => {
     if (scrollRef.current && index === chats.length - 1) {
       scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
@@ -46,9 +46,12 @@ const Messages = ({ chat, index }) => {
               {chat.data.media && <img src={chat.data.media} alt="" />}
             </MessageContent>
           </Wrapper>
+        
         </MessagesContainer>
+ 
       </Container>
       <div ref={scrollRef}></div>
+     
     </div>
 
   )

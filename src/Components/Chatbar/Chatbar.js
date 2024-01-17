@@ -46,15 +46,15 @@ const Chatbar = () => {
               <ChatMainContainer>
 
                 {chats?.sort((a, b) => a.data.timestamp - b.data.timestamp)
-                  .map((chat) => {
+                  .map((chat,index) => {
                     return <>
                     
-                      <Messages chat={chat} key={chat.id} index={chat.id} />
-                      <ToastContainer />
+                      <Messages chat={chat} key={index} index={index} />                    
                      
                     </>
                   })
                 }
+                 <ToastContainer />
               </ChatMainContainer>
               <ChatFooter>
                 <ChatInput />

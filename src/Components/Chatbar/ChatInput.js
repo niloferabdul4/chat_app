@@ -11,6 +11,8 @@ import Picker from '@emoji-mart/react';
 import { ref, uploadBytesResumable, getDownloadURL } from '@firebase/storage';
 import { storage } from '../../firebase';
 import { db } from '../../firebase';
+import SendIcon from '@mui/icons-material/Send';
+import { Send } from '@mui/icons-material';
 
 const ChatInput = () => {
     const { state: { loggedUser, selectedContact } } = useContext(AppContext)
@@ -111,10 +113,11 @@ const ChatInput = () => {
                         <AttachFileOutlinedIcon fontSize='medium'  />
                     </IconButton>
                     <IconButton onClick={() => setShowEmoji(showEmoji=>!showEmoji)}>
-                    <SentimentSatisfiedOutlined  />
+                    <SentimentSatisfiedOutlined fontSize='medium'  />
                     </IconButton>
-                    <SendButton type='submit'  >Send</SendButton>
-                   
+                    <SendButton type='submit'  >
+                       <Send fontSize='medium'/>
+                    </SendButton>                   
                 </ChatIcons>
                 {showEmoji && (
                 <Emoji>

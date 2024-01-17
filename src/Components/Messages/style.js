@@ -26,7 +26,7 @@ const MessageContent=styled.div`
     padding:12px;
     border-radius:${(props) => (props.id==='owner' ? '10px 0px 10px 10px' : '0px 10px 10px 10px')};
     max-width: max-content;
-    font-size: 1rem;
+    font-size: 1.1rem;
     img{
         background-color:none;
     }

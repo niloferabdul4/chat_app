@@ -121,10 +121,11 @@ const ChatIcons = styled.div`
  justify-content: flex-start;
  align-items: center;
  @media (min-width:320px)and (max-width: 600px) {
-    gap:4px
+  
+    gap:0px
   }
   @media  (min-width:601px) and (max-width:820px){
-    gap:10px;
+    gap:5px;
   }
 
 `
@@ -149,13 +150,21 @@ const Emoji=styled.div`
 
 const SendButton = styled.button`
   border:none;
-  font-size:1.1rem;
   background-color:	#075E54;
-  padding: 8px;
+  padding: 4px;
   color:white;
   border-radius: 6px;
-  font-weight: bold;
   cursor: pointer;
 
+  @media (min-width:368px)and (max-width: 600px) {          
+         font-size: 1rem;
+         padding:4px;
+
+            }
+            @media (min-width:601px)and (max-width: 820px) {          
+           font-size: 0%.98rem;
+           padding:6px;
+
+            }
 `
 export { ChatContainer, ChatNavContainer, ChatMainContainer,IntroImage, Wrapper, ChatFooter, InputContainer, InputWrapper, Input,ChatIcons, Emoji, SendButton, ImageInput }
