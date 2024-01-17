@@ -1,10 +1,10 @@
 import React, { useContext, useRef, useEffect } from 'react'
-import { SenderMessageContent, ReceiverMessageContent, MessageContent,MessagesContainer, Container, Image, Wrapper } from './style'
+import { SenderMessageContent, ReceiverMessageContent, MessageContent, MessagesContainer, Container, Image, Wrapper } from './style'
 import { AppContext } from '../../Context/AppContextProvider'
 import moment from 'moment'
 import { LinearProgress } from '@mui/material'
 const Messages = ({ chat, index }) => {
-  const { state: { loggedUser, selectedContact, chats,isLoading } } = useContext(AppContext)
+  const { state: { loggedUser, selectedContact, chats, isLoading } } = useContext(AppContext)
   const scrollRef = useRef(null)
 
   useEffect(() => {
@@ -13,24 +13,24 @@ const Messages = ({ chat, index }) => {
     }
 
   }, [chats, index])
- 
- 
-  /*******  convert time format  ********8*/
-  const date = new Date((chat.data.timestamp)* 1000);
 
-// Format the date to a time string like "10:20 pm"
-const formattedTime = date.toLocaleTimeString('en-US', {
-  hour: 'numeric',
-  minute: '2-digit',
-  hour12: true,
-});
+
+  /*******  convert time format  ********8*/
+  const date = new Date((chat.data.timestamp) * 1000);
+
+  // Format the date to a time string like "10:20 pm"
+  const formattedTime = date.toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+  });
 
   return (
     <div>
-    <Container>
-        <MessagesContainer  id={chat.data.senderId === loggedUser.uid ? 'owner' : ''}>
-          <Wrapper  id={chat.data.senderId === loggedUser.uid ? 'owner' : ''}>
-          <span style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+      <Container>
+        <MessagesContainer id={chat.data.senderId === loggedUser.uid ? 'owner' : ''}>
+          <Wrapper id={chat.data.senderId === loggedUser.uid ? 'owner' : ''}>
+            <span style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
               <Image
                 src={
                   chat.data.senderId === loggedUser.uid
@@ -43,12 +43,12 @@ const formattedTime = date.toLocaleTimeString('en-US', {
             </span>
             <MessageContent id={chat.data.senderId === loggedUser.uid ? 'owner' : ''}>
               <p>{chat.data.text}</p>
-              {chat.data.media &&  <img  src={chat.data.media} alt="" />}
+              {chat.data.media && <img src={chat.data.media} alt="" />}
             </MessageContent>
-          </Wrapper>        
+          </Wrapper>
         </MessagesContainer>
-        </Container>  
-        <div ref={scrollRef}></div>        
+      </Container>
+      <div ref={scrollRef}></div>
     </div>
 
   )

@@ -7,8 +7,7 @@ import { InputContainer, Input, InputWrapper, ChatIcons, SendButton, Emoji } fro
 import { addDoc, collection, doc, serverTimestamp, setDoc } from '@firebase/firestore';
 import { Timestamp } from '@firebase/firestore';
 import SentimentSatisfiedOutlined from '@mui/icons-material/SentimentSatisfiedOutlined';
-import { Picker } from 'emoji-mart';
-// import 'emoji-picker-react/dist/index.css';
+import Picker from '@emoji-mart/react';
 import { ref, uploadBytesResumable, getDownloadURL } from '@firebase/storage';
 import { storage } from '../../firebase';
 import { db } from '../../firebase';
@@ -109,15 +108,21 @@ const ChatInput = () => {
                             setImage(e.target.files[0])
                         }} />
                     <IconButton onClick={uploadFile}>
-                        <AttachFileOutlinedIcon fontSize='large' />
+                        <AttachFileOutlinedIcon fontSize='medium'  />
                     </IconButton>
-                    <SentimentSatisfiedOutlined onClick={() => setShowEmoji(true)} />
+                    <IconButton onClick={() => setShowEmoji(showEmoji=>!showEmoji)}>
+                    <SentimentSatisfiedOutlined  />
+                    </IconButton>
                     <SendButton type='submit'  >Send</SendButton>
+                   
                 </ChatIcons>
+                {showEmoji && (
+                <Emoji>
+                    <Picker theme={'light'} onEmojiSelect={addEmoji} />
+                </Emoji>
+            )}
             </InputWrapper>
-            {showEmoji && (<Emoji>
-                <Picker theme={'dark'} onEmojiSelect={addEmoji} />
-            </Emoji>)}
+           
         </InputContainer>
 
     )

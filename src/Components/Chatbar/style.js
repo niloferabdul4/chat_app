@@ -2,10 +2,8 @@ import { styled } from "styled-components";
 
 
 const ChatContainer = styled.div`
-  flex:2;
-  flex-grow:1;
   width:100%;
-  height:100%;
+  max-height:100vh;
   background-color:	#dcf8c6; 
   display: flex;
   flex-direction:column;
@@ -13,14 +11,6 @@ const ChatContainer = styled.div`
   justify-content: space-between;
   position:relative;
   padding: 0px;
-
-  @media (min-width:368px)and (max-width: 600px) {
-
-   order:2;
-  }
-  @media (min-width:601px)and (max-width: 820px) {
-   flex:1.44;
-  }
 
 `
 
@@ -33,15 +23,15 @@ const ChatNavContainer = styled.div`
   height:80px;
   width:100%;
   background-color: #075E54;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 20px;
-        color: lightgray;
-        position:sticky;
-        border-left:2px solid grey;
-        @media (min-width:320px)and (max-width: 600px) {
-       height:60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  color: lightgray;
+  position:sticky;
+  border-left:2px solid grey;
+  @media (min-width:320px)and (max-width: 600px) {
+  height:60px;
   }
 
 
@@ -74,23 +64,21 @@ width:100%;
 
 
 const ChatFooter = styled.div`
-
-    bottom:0;
-    left:0;
-    height:60px;
-      width:100%;
-      position:absolute;
-      background-color:lightgreen;
-    display:flex;
-    align-items:center;
+  bottom:0;
+  left:0;
+  height:60px;
+  width:100%;
+  position:absolute;
+  background-color:lightgreen;
+  display:flex;
+  align-items:center;
 
 `
 
 const InputContainer = styled.div`
-width:100%;
-display: flex;
-align-items: center;
-
+  width:100%;
+  display: flex;
+  align-items: center;
 
 `
 
@@ -115,10 +103,9 @@ border:none;
 outline:none;
  font-size: 1rem;
  @media (min-width:320px)and (max-width: 600px) {
-   padding:4px;
+ padding:4px;
   }
   @media  (min-width:601px) and (max-width:820px){
-
 padding: 6px;
   }
 `
@@ -142,15 +129,23 @@ const ChatIcons = styled.div`
 
 `
 const Emoji=styled.div`
-    position: relative;
-    padding: 0px 100px 50px 100px;
-    width: 100%;
-    top: 20px;
-    left: 100px;
-  
+            position: relative;
+            width: 100%;
+            top:-450px;
+            right: -150px;
+            transition:all 0.3s ease;
+            @media (min-width:368px)and (max-width: 600px) {          
+            right:420px;
+            width: 80%;
+
+            }
+            @media (min-width:601px)and (max-width: 820px) {          
+            right: 220px;
+            width: 80%;
+
+            }
 
 `
-
 
 const SendButton = styled.button`
   border:none;

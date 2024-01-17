@@ -7,11 +7,10 @@ import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 import intro from '../../assets/whatsapp-connect.jpg';
 import { AppContext } from '../../Context/AppContextProvider';
 import { Timestamp, collection, addDoc } from '@firebase/firestore';
-import { Image } from '../Users/style';
+import {UserImage } from '../Users/style';
 import { LeftWrapper, RightWrapper } from '../Navbar/style';
 import { ToastContainer } from 'react-toastify';
 import ChatInput from './ChatInput';
-import { Container } from '../Messages/style';
 
 
 const Chatbar = () => {
@@ -33,13 +32,13 @@ const Chatbar = () => {
               <ChatNavContainer >
                 <Wrapper >
                   <LeftWrapper key={selectedContact?.uid}>
-                    <Image src={selectedContact?.photoURL} alt='' />
+                    <UserImage src={selectedContact?.photoURL} alt='' />
                     <p style={{ fontFamily: 'sans-serif', fontWeight: 'semi-bold', fontSize: '18px', padding: '10px 0px' }}>{selectedContact?.displayName}</p>
                   </LeftWrapper>
                   <RightWrapper>
-                    <VideoCameraBackOutlinedIcon fontSize='large' />
-                    <PersonAddAlt1OutlinedIcon fontSize='large' />
-                    <MoreHorizOutlinedIcon fontSize='large' />
+                    <VideoCameraBackOutlinedIcon fontSize='medium' />
+                    <PersonAddAlt1OutlinedIcon fontSize='medium' />
+                    <MoreHorizOutlinedIcon fontSize='medium' />
                   </RightWrapper>
                 </Wrapper>
               </ChatNavContainer>

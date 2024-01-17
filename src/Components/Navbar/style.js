@@ -18,7 +18,16 @@ const NavbarContainer=styled.div`
 
 
 `
+const Logo=styled.div`
 
+
+@media (min-width:320px)and (max-width: 600px) {
+  display:none;
+  }
+  @media (min-width:601px)and (max-width: 820px) {
+  display: none;
+  }
+`
 const LeftWrapper=styled.div`
    display: flex;
    flex-direction: row;
@@ -34,41 +43,53 @@ const RightWrapper=styled.div`
    align-items: center;
    justify-content: flex-end;
    gap:15px;
-   
+
 `
 
 const UserName=styled.p`
-font-size: 1.2rem;
-@media (min-width:320px)and (max-width: 600px) {
-   font-size: 0.98rem;
-  }
-  @media (min-width:601px)and (max-width: 820px) {
-   font-size: 1.1rem;
-  }
+  font-size: 1.2rem;
+  @media (min-width:320px)and (max-width: 600px) {
+    display:none;
+    }
+    @media (min-width:601px)and (max-width: 820px) {
+  display: none;
+    }
 `
 
 const Image=styled.img`
-   border-radius: 50%;
-    height:30px;
-    width:30px;
-    cursor:pointer;
-    object-fit:contain;
-   
+  border-radius: 50%;
+  height:30px;
+  width:30px;
+  cursor:pointer;
+  object-fit:contain;
+  @media (min-width:320px)and (max-width: 600px) {
+  display:none;
+  }
+  @media (min-width:601px)and (max-width: 820px) {
+  display: none;
+  }
    
 `
 const LogoutButton=styled.button`
+ display: flex;
  border:none;
  background: transparent;
  color:white;
- font-size: 1.1em;;
- padding:6px;
+ font-size: 1.1em;
+ padding: 6px;
+ gap:2px;
  cursor: pointer;
  @media (min-width:320px)and (max-width: 600px) {
-   font-size: 0.98rem;
+   padding:0px;
+   p{
+   display: none;
+   }
   }
   @media (min-width:601px)and (max-width: 820px) {
-   font-size: 0.98rem;
+   p{
+   display: none;
+   }
   }
 `
 
-export {NavbarContainer,LeftWrapper,RightWrapper,UserName,LogoutButton,Image}
+export {NavbarContainer,LeftWrapper,RightWrapper,UserName,LogoutButton,Image,Logo}

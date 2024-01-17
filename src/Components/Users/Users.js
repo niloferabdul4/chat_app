@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { UsersContainer, Wrapper, UserName, Image } from './style'
+import { UsersContainer, Wrapper, UserName, UserImage,UsersTitle } from './style'
 import { AppContext } from '../../Context/AppContextProvider'
 import { onSnapshot, collection,query, orderBy, where, doc,getDocs } from '@firebase/firestore'
 import { db } from '../../firebase'
@@ -61,7 +61,7 @@ const Users = () => {
     const unSub=onSnapshot(collection(db, 'chats', combinedId, 'messages'), orderBy('timestamp', 'desc'), snapshot => {
     const chats = snapshot.docs.map(doc => ({ id: doc.id, data: doc.data()  }))
            dispatch({ type: 'LOAD_CHATS', payload: chats })
-         
+           
     })
     return ()=>{
       unSub()
@@ -71,11 +71,11 @@ const Users = () => {
   return (
     <>
       <UsersContainer>
-        <p style={{ fontFamily: 'sans-serif', fontWeight: 'semi-bold', fontSize: '20px', padding: '20px 0px', borderBottom: '1px solid grey' }}>Contacts</p>
+        <UsersTitle>Friends</UsersTitle>
         {usersList?.map(user => {
           return <>
             <Wrapper role='button' key={user.id} onClick={() => selectUser(user)} id={selectedContact === user ? 'selected' : ''} >
-              <Image src={user.photoURL} alt='' />
+              <UserImage src={user.photoURL} alt='' />
               <span style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', marginLeft: '15px' }}>
                 <UserName>{user.displayName}</UserName>
                 <p></p>
